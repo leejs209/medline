@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ title }} | 대륜고 MedLine</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css" />
+</head>
+
+<body>
+
+    <section class="hero is-light">
+        <div class="hero-head ">
+            <nav class="navbar">
+                <div class="navbar-brand">
+                    <a class="navbar-item is-size-4">
+                        MedLine
+                    </a>
+                    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                      <span aria-hidden="true"></span>
+                      <span aria-hidden="true"></span>
+                      <span aria-hidden="true"></span>
+
+                    </a>
+                </div>
+
+                <div class="navbar-menu">
+                    <div class="navbar-start">
+                        <a class="navbar-item" href="{% url 'home' %}">
+                           홈
+                        </a>
+                        <a class="navbar-item">
+                           상담 신청
+                        </a>
+                        <a class="navbar-item" href="{% url 'contact' %}">
+                           연락처
+                        </a>
+                        <a class="navbar-item has-text-danger">
+                            긴급 연결
+                        </a>
+                    </div>
+                    <div class="navbar-end">
+                        {% if user.is_authenticated %}
+                        <a class="navbar-item">
+                            <em>{{ user.username }}</em>님
+                        </a>
+                        {% else %}
+                        <a class="navbar-item" href="{% url 'login' %}">
+                            로그인
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+            </nav>
+        </div>
+    </section>
+
+
+    {% block body %}
+    {% endblock %}
+
+    <footer class="footer">
+        <p class="content has-text-centered">대륜고등학교 메드라인 ©2019</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+{% extends 'medline/base.html' %}
+
+{% block title %} 홈 {% endblock %}
+
+{% block body %}
+<section class="section has-background-white-bis">
+    <h1 class="title ">{{ title }}</h1>
+    <div class="columns">
+        <div class="column">
+            <div class="box">
+                <h1 class="subtitle has-text-centered">
+                    전화번호
+                </h1>
+                <p> 보건실: 000-0000-0000</p>
+                <p> 기술지원: 000-0000-0000</p>
+            </div>
+        </div>
+        <div class="column">
+            <div class="box">
+                <h1 class="subtitle has-text-centered">
+                    이메일
+                </h1>
+                <p> 기술지원: email@example.com</p>
+            </div>
+        </div>
+        <div class="column">
+            <div class="box">
+                <h1 class="subtitle has-text-centered">
+                    웹사이트
+                </h1>
+                <p> 대륜고등학교: <a href="http://daeryun.hs.kr">http://daeryun.hs.kr</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
