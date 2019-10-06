@@ -1,10 +1,16 @@
 {% extends 'medline/base.html' %}
 
-
+{% load bulma_tags %}
 {% block body %}
 <section class="section has-background-white-bis">
     <h1 class="title ">{{ title }}</h1>
     <h2 class="subtitle">해당하는 증상을 체크하거나 입력해주세요</h2>
-    <!--- Should put code for a form inside --->
+    <form method="post" action="/consultform/submit" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|bulma }}
+        <div class="container has-text-centered">
+            <button class="button is-medium" type="submit">제출</button>
+        </div>
+    </form>
 </section>
 {% endblock %}

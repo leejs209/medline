@@ -1,22 +1,22 @@
 ### Todo
 
 - Custom user creation form for:
-   - Localised form verification
+   - Localised form verification messages
         - In Korean
    - CAPTCHA
         - Stop BruteForce
    - Student Verifiation -> Possible solutions
-        - Barcode matching with School Library DB
-        - Manual checking by Infirmary T
+        - __Barcode matching with School Library DB__
+        - Manual checking by Infirmary T 
         - Automatic sign-up via default ID/PW
             - PW would need to be unique --> bithday, etc.
-        
-
-- Create Modal Login Form
-- Do something about the Login Form and Signup Form's CSS
-    - possibly django-crispy-forms with bootstrap
+- Admin Panel
+    - Should be easy to use
+    - Can receive alerts and play Emergency Sound
+- Client-side Emergency Streaming
+    - Utilizing OpenCV Library
 
 ### Issues
 
-- `medline.views.consulthistory` linked with template `medline.consulthistory` keeps logging out when accessed.
--  
+-  Bulma's navbar burger doesn't work
+    - may need to implement seperate menu for mobile devices using the tag `is-mobile`

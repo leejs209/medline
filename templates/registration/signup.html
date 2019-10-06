@@ -1,11 +1,18 @@
 {% extends 'medline/base.html' %}
 {% block title %}회원가입{% endblock %}
 
+{% load bulma_tags %}
 {% block body %}
-
-<form method="post" action="">
-    {% csrf_token %}
-    <table class="table">{{ form }}</table>
-</form>
-
+<div class="hero-body has-background-white-bis">
+    <h1 class="title is-size-1">{{ title }}</h1>
+    <div class="field">
+        <div class="control">
+            <form method="post" action="">
+                {% csrf_token %}
+                {{ form|bulma }}
+                <input class="button" type="submit" value="가입">
+            </form>
+        </div>
+   </div>
+</div>
 {% endblock %}

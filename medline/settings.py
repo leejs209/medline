@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'medline',
     'multiselectfield',
+    'bulma',
 ]
 
 MIDDLEWARE = [

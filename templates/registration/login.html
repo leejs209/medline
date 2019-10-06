@@ -1,16 +1,31 @@
 {% extends 'medline/base.html' %}
 
-{% block title %} 홈 {% endblock %}
-
+{% load bulma_tags %}
 {% block body %}
 <section class="section has-background-white-bis">
     <h1 class="title ">로그인</h1>
+
+    {% if messages %}
+    <ul class="message">
+        {% for message in messages %}
+        <article class="message is-warning">
+          <div class="message-header">
+            <p>알림</p>
+          </div>
+          <div class="message-body">
+            {{ message }}
+          </div>
+        </article>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
     <form method="post">
         {% csrf_token %}
-
-        <table class="table has-background-light is-center">{{ form.as_table }}</table>
-      <button type="submit">Login</button>
+        {{ form|bulma }}
+      <button class="button" type="submit">Login</button>
     </form>
-</section>
-{% endblock %}
 
+</section>
+
+{% endblock %}

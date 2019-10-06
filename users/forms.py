@@ -6,8 +6,9 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
+        fields = ('grade', 'division', 'studentno', 'name', 'barcode', 'username')
 
-        fields = { 'username' ,'password','grade','barcode'}
+    field_order = ['grade', 'division', 'studentno', 'name', 'barcode', 'username']
 
 class CustomUserChangeForm(UserChangeForm):
 

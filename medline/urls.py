@@ -18,6 +18,9 @@ from django.urls import path, include
 import medline.views as medline
 import users.views as users
 
+from . import settings
+from django.contrib.staticfiles.urls import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,5 +30,8 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('signup/', users.signup, name='signup'),
     path('consulthistory', medline.consulthistory, name='consulthistory'),
-    #parh(name='logout'),
+    path('consultform/submit', medline.get_consultform, name='get_consultform')
 ]
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -4,19 +4,41 @@
 {% block body %}
 <section class="section has-background-white-bis">
     <h1 class="title ">{{ title }}</h1>
-    {% if user.is_authenticated %}
-        <div class="columns">
-            {% for x in history %}
-            <div class="column is-">
-                <div class="box">
-                    <h2 class="title is-size-4">{{ x.title }}</h2>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <h1>Please Log in</h1>
-        <!--- add a modal to tell the user to login or join --->
+
+    {% if messages %}
+    <ul class="message">
+        {% for message in messages %}
+        <article class="message is-warning">
+          <div class="message-header">
+            <p>알림</p>
+          </div>
+          <div class="message-body">
+            {{ message }}
+          </div>
+        </article>
+        {% endfor %}
+      </ul>
     {% endif %}
+
+        <div class="columns is-multiline">
+        {% if history.count != 0 %}
+        {% load static %}
+            {% for x in history %}
+                <div class="column is-one-quarter">
+                    <div class="box">
+                        <h2 class="title is-size-4">{{ x.title }}</h2>
+
+                        <figure class="image">
+                            <img src="{{ x.image.url }}">
+                        </figure>
+
+
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h2 class="subtitle">아직 상담을 한 적 없습니다.</h2>
+        {% endif %}
+        </div>
 </section>
 {% endblock %}
