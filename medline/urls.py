@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 import medline.views as medline
+import users.views as users
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,4 +25,7 @@ urlpatterns = [
     path('contact', medline.contact, name='contact'),
     path('consultform', medline.consultform, name='consultform'),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('signup/', users.signup, name='signup'),
+    path('consulthistory', medline.consulthistory, name='consulthistory'),
+    #parh(name='logout'),
 ]

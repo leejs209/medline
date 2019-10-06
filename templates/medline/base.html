@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ title }} | 대륜고 MedLine</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css" />
-</head>
 
+</head>
 <body>
 
     <section class="hero is-light">
@@ -17,12 +17,12 @@
                     <a class="navbar-item is-size-4">
                         MedLine
                     </a>
-                    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-                      <span aria-hidden="true"></span>
-                      <span aria-hidden="true"></span>
-                      <span aria-hidden="true"></span>
+                    <div class="navbar-burger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
 
-                    </a>
+                    </div>
                 </div>
 
                 <div class="navbar-menu">
@@ -42,11 +42,17 @@
                     </div>
                     <div class="navbar-end">
                         {% if user.is_authenticated %}
-                        <a class="navbar-item">
-                            <em>{{ user.username }}</em>님
+                        <a class="navbar-item" disabled>
+                            <b>{{ user.username }}</b>님
+                        </a>
+                        <a class="navbar-item" href="{% url 'logout' %}">
+                            로그아웃
                         </a>
                         {% else %}
-                        <a class="navbar-item" href="{% url 'login' %}">
+                        <a class="navbar-item" href="{% url 'signup' %}">
+                            회원가입
+                        </a>
+                        <a class="navbar-item is-link" href="{% url 'login' %}">
                             로그인
                         </a>
                         {% endif %}
@@ -61,6 +67,7 @@
 
     {% block body %}
     {% endblock %}
+    <div id="anymod-ordbno"></div>
 
     <footer class="footer">
         <p class="content has-text-centered">대륜고등학교 메드라인 ©2019</p>

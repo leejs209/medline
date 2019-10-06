@@ -6,8 +6,9 @@
 <section class="section has-background-white-bis">
     <h1 class="title ">로그인</h1>
     <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
+        {% csrf_token %}
+
+        <table class="table has-background-light is-center">{{ form.as_table }}</table>
       <button type="submit">Login</button>
     </form>
 </section>

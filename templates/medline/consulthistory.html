@@ -1,0 +1,22 @@
+{% extends 'medline/base.html' %}
+
+
+{% block body %}
+<section class="section has-background-white-bis">
+    <h1 class="title ">{{ title }}</h1>
+    {% if user.is_authenticated %}
+        <div class="columns">
+            {% for x in history %}
+            <div class="column is-">
+                <div class="box">
+                    <h2 class="title is-size-4">{{ x.title }}</h2>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h1>Please Log in</h1>
+        <!--- add a modal to tell the user to login or join --->
+    {% endif %}
+</section>
+{% endblock %}

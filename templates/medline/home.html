@@ -1,6 +1,5 @@
 {% extends 'medline/base.html' %}
 
-{% block title %} 홈 {% endblock %}
 
 {% block body %}
 <section class="section has-background-white-bis">
@@ -15,7 +14,7 @@
             </a>
         </div>
         <div class="column">
-            <a class="box">
+            <a class="box" href="{% url 'consulthistory' %}">
                 <h1 class="subtitle has-text-centered">
                     상담 조회
                 </h1>
@@ -30,5 +29,6 @@
             </a>
         </div>
     </div>
+
 </section>
 {% endblock %}
