@@ -26,11 +26,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', medline.home, name='home'),
     path('contact', medline.contact, name='contact'),
-    path('consultform', medline.consultform, name='consultform'),
+    path('consult/form', medline.consultform, name='consultform'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('signup/', users.signup, name='signup'),
-    path('consulthistory', medline.consulthistory, name='consulthistory'),
-    path('consultform/submit', medline.get_consultform, name='get_consultform')
+    path('consult/history', medline.consulthistory, name='consulthistory'),
+    path('consult/reserved', medline.consultreserved, name='consultreserved'),
+    path('consult/form/submit', medline.get_consultform, name='get_consultform'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
