@@ -29,3 +29,7 @@
     - may need to implement seperate menu for mobile devices using the tag `is-mobile`
 - Add types of messages to bulma's popup message
     - e.g. `{% if tag == 'warning` %} is-warning {% elif ... %} {% endif%}`
+- Make it so that only one `pending_consult` can be created
+    - change the template accordingly to show only one object
+    - throw an error if tries to make more than one appointment
+        - possibly remove the button to `consultform` upon already having made one

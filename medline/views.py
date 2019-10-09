@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from .models import consult
 from .forms import ConsultForm
 from django.contrib import messages
-from django.db.models import F
+from django.urls import reverse
+import datetime
 
 def home(request):
     name = '홈'
@@ -28,23 +29,23 @@ def consultform(request):
     return render(request, 'medline/consultform.html', {'userid': userid, 'title': name, 'form': form})
 
 
-def consulthistory(request):
+def finished_consult(request):
     name = '상담내역'
     userid = request.user.id
     consulthistory = consult.objects.filter(user=userid)
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
         return redirect('login')
-    return render(request, 'medline/consulthistory.html', {'userid': userid, 'title': name, 'history': consulthistory})
+    return render(request, 'medline/finished_consult.html', {'userid': userid, 'title': name, 'history': consulthistory})
 
-def consultreserved(request):
+def pending_consult(request):
     name = '상담내역'
     userid = request.user.id
-    consulthistory = consult.objects.filter(user=userid)
+    consulthistory = consult.objects.filter(user=userid, reserve_datetime__gt = datetime.datetime.now())
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
         return redirect('login')
-    return render(request, 'medline/consultreserved.html', {'userid': userid, 'title': name, 'history': consulthistory})
+    return render(request, 'medline/pending_consult.html', {'userid': userid, 'title': name, 'history': consulthistory})
 
 def get_consultform(request):
     if request.method == "POST":
@@ -56,7 +57,7 @@ def get_consultform(request):
             consult.image = form.cleaned_data['image']
             consult.save()
             messages.success(request, '상담이 신청되었습니다')
-            return redirect('consultreserve')
+            return redirect(reverse('pending_consult'))
     else:
         messages.error(request, "잘못 들어오셨어요")
         return redirect('home')

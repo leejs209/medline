@@ -29,8 +29,8 @@ urlpatterns = [
     path('consult/form', medline.consultform, name='consultform'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('signup/', users.signup, name='signup'),
-    path('consult/history', medline.consulthistory, name='consulthistory'),
-    path('consult/reserved', medline.consultreserved, name='consultreserved'),
+    path('consult/history/finished', medline.finished_consult, name='finished_consult'),
+    path('consult/history/pending', medline.pending_consult, name='pending_consult'),
     path('consult/form/submit', medline.get_consultform, name='get_consultform'),
 ]
 
