@@ -22,6 +22,7 @@
         - fiture out how to update status when date passes
 - Client Panel in the Infirmary for students that have not made a reservation previously
     - Problably safe to use similar code from the app `medline`
+- Achieve DRY by making `pending_consult`, `finished_consult`, and `expired_consult` into one with context with a boolean value
 
 ### Issues
 

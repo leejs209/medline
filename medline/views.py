@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.urls import reverse
 import datetime
 
+
 def home(request):
     name = '홈'
     userid = request.user.id
@@ -13,7 +14,7 @@ def home(request):
 
 
 def contact(request):
-    name = '연락'
+    name = '연락처'
     userid = request.user.id
 
     return render(request, 'medline/contact.html', {'userid': userid, 'title': name})
@@ -32,20 +33,35 @@ def consultform(request):
 def finished_consult(request):
     name = '상담내역'
     userid = request.user.id
-    consulthistory = consult.objects.filter(user=userid)
+    consulthistory = consult.objects.filter(user=userid, is_finished=True)
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
         return redirect('login')
-    return render(request, 'medline/finished_consult.html', {'userid': userid, 'title': name, 'history': consulthistory})
+    return render(request, 'medline/finished_consult.html',
+                  {'userid': userid, 'title': name, 'history': consulthistory})
+
 
 def pending_consult(request):
     name = '상담내역'
     userid = request.user.id
-    consulthistory = consult.objects.filter(user=userid, reserve_datetime__gt = datetime.datetime.now())
+    consulthistory = consult.objects.filter(user=userid, reserve_date__gt=datetime.datetime.now(),
+                                            is_finished=False)
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
         return redirect('login')
     return render(request, 'medline/pending_consult.html', {'userid': userid, 'title': name, 'history': consulthistory})
+
+
+def expired_consult(request):
+    name = '상담내역'
+    userid = request.user.id
+    consulthistory = consult.objects.filter(user=userid, reserve_date__lte=datetime.datetime.now(),
+                                            is_finished=False)
+    if not request.user.is_authenticated:
+        messages.error(request, "로그인이 필요합니다.")
+        return redirect('login')
+    return render(request, 'medline/expired_consult.html', {'userid': userid, 'title': name, 'history': consulthistory})
+
 
 def get_consultform(request):
     if request.method == "POST":
