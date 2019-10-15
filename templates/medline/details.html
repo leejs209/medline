@@ -1,0 +1,18 @@
+{% extends 'medline/base.html' %}
+
+
+{% block body %}
+<section class="section has-background-white-bis">
+
+    <div class="button"><a>back</a></div>
+
+    <div class="container">
+        <h2 class="title is-size-4">{{ x.title }}</h2>
+        <h2 class="subtitle has-text-grey-dark is-size-5">{{ x.added_datetime|date:"Y년 n월 j일 h:i" }}</h2>
+        <figure class="image">
+            <img src="{{ x.image.url }}">
+        </figure>
+    </div>
+
+</section>
+{% endblock %}

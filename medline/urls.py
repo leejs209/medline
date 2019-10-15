@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 import medline.views as medline
 import users.views as users
+import medicalhub.views as medicalhub
 
 from . import settings
 from django.contrib.staticfiles.urls import static
@@ -32,7 +33,9 @@ urlpatterns = [
     path('consult/history/finished', medline.finished_consult, name='finished_consult'),
     path('consult/history/pending', medline.pending_consult, name='pending_consult'),
     path('consult/form/submit', medline.get_consultform, name='get_consultform'),
-    path('consult/history/expired', medline.expired_consult, name='expired_consult')
+    path('consult/history/expired', medline.expired_consult, name='expired_consult'),
+    path('medicalhub', medicalhub.adminpanel, name='admin_panel'),
+    path('consult/details/<int:id>', medline.details ,name='details')
 ]
 
 urlpatterns += staticfiles_urlpatterns()

@@ -4,7 +4,7 @@ from .forms import ConsultForm
 from django.contrib import messages
 from django.urls import reverse
 import datetime
-
+from django.http import HttpResponse
 
 def home(request):
     name = '홈'
@@ -66,14 +66,25 @@ def expired_consult(request):
 def get_consultform(request):
     if request.method == "POST":
         form = ConsultForm(request.POST, request.FILES)
-        if form.is_valid:
+        if form.is_valid():
             # add to the `consult` model
             consult = form.save(commit=False)
             consult.user = request.user
             consult.image = form.cleaned_data['image']
             consult.save()
             messages.success(request, '상담이 신청되었습니다')
-            return redirect(reverse('pending_consult'))
+            #redirect(reverse('pending_consult'))
+            #todo: redirect after showing message
+            return HttpResponse('<html><body>Redirecting...</body></html>')
     else:
         messages.error(request, "잘못 들어오셨어요")
-        return redirect('home')
+        redirect('home')
+        return HttpResponse('<html><body>Not logged in, Redirecting...</body></html>')
+
+
+def details(request, id):
+    userid = request.user.id
+    chosen_consult = consult.objects.get(id=id)
+    if not chosen_consult.user == request.user:
+        return redirect('login')
+    return render(request, 'medline/details.html', {'userid': userid, 'consult': chosen_consult})

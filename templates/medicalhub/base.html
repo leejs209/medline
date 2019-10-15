@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ title }} | 대륜고 MedLine</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css" />
+</head>
+<body>
+
+<nav class="navbar is-info">
+    <div class="navbar-brand">
+        <a class="navbar-item is-size-4" href="{% url 'admin_panel' %}">
+            MedLine 관리
+        </a>
+    </div>
+
+    <div class="navbar-menu">
+        <div class="navbar-start">
+            <!-- todo: replace these menu bar buttons with other things
+            <a class="navbar-item" href="{%  url 'consultform' %}">
+                something
+            </a>
+            --->
+
+    </div>
+</nav>
+
+
+{% block body %}
+{% endblock %}
+
+<footer class="footer">
+    <p class="content has-text-centered">대륜고등학교 메드라인 ©2019</p>
+</footer>
+
+
+
+
+</body>
+</html>
