@@ -3,22 +3,9 @@
 
 {% block body %}
     <section class="section has-background-white-bis">
-        <h1 class="title ">{{ title }}</h1>
 
-        {% if messages %}
-            <ul class="message">
-            {% for message in messages %}
-    <article class="message is-warning">
-            <div class="message-header">
-                    <p>알림</p>
-          </div>
-            {{ message }}
-          <div class="message-body">
-          </div>
-        </article>
-        {% endfor %}
-      </ul>
-    {% endif %}
+    <h1 class="title ">{{ title }}</h1>
+    {% include 'medline/show_message.html' %}
 
     <div class="tabs">
       <ul>
@@ -28,29 +15,7 @@
       </ul>
     </div>
 
-    <div class="columns is-multiline">
-    {% if history.count != 0 %}
-    {% load static %}
-        {% for x in history %}
-            <div class="column is-one-quarter">
-                <div class="box">
-                    <div class="container">
-                        <h2 class="title is-size-4">{{ x.title }}</h2>
-                        <h2 class="subtitle has-text-grey-dark is-size-5">{{ x.added_datetime|date:"Y년 n월 j일 " }}</h2>
-                    </div>
-                    <figure class="image">
-                        <img src="{{ x.image.url }}">
-                    </figure>
-
-                </div>
-            </div>
-        {% endfor %}
-    {% else %}
-        <div class="hero-body has-text-centered">
-            <h2 class="subtitle">만료된 상담이 없습니다.</h2>
-        </div>
-    {% endif %}
-    </div>
+    {% include 'medline/consult_column.html' with empty_message='만료된 상담이 없습니다.' %}
 
 </section>
 {% endblock %}

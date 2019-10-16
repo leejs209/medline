@@ -5,7 +5,7 @@
 <section class="section has-background-white-bis">
     <h1 class="title ">{{ title }}</h1>
     <h2 class="subtitle">해당하는 증상을 체크하거나 입력해주세요</h2>
-    <form method="post" action="/consult/form/submit" enctype="{% url 'get_consultform' %}">
+    <form method="post" action="{% url 'get_consultform' %}" enctype="{% url 'get_consultform' %}">
         {% csrf_token %}
         {{ form|bulma }}
         <div class="container has-text-centered">

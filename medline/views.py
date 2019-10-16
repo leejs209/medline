@@ -55,12 +55,12 @@ def pending_consult(request):
 def expired_consult(request):
     name = '상담내역'
     userid = request.user.id
-    consulthistory = consult.objects.filter(user=userid, reserve_date__lte=datetime.datetime.now(),
+    history = consult.objects.filter(user=userid, reserve_date__lte=datetime.datetime.now(),
                                             is_finished=False)
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
         return redirect('login')
-    return render(request, 'medline/expired_consult.html', {'userid': userid, 'title': name, 'history': consulthistory})
+    return render(request, 'medline/expired_consult.html', {'userid': userid, 'title': name, 'history': history})
 
 
 def get_consultform(request):
@@ -68,23 +68,26 @@ def get_consultform(request):
         form = ConsultForm(request.POST, request.FILES)
         if form.is_valid():
             # add to the `consult` model
-            consult = form.save(commit=False)
-            consult.user = request.user
-            consult.image = form.cleaned_data['image']
-            consult.save()
+            added_consult = form.save(commit=False)
+            added_consult.user = request.user
+            added_consult.image = form.cleaned_data['image']
+            added_consult.save()
             messages.success(request, '상담이 신청되었습니다')
-            #redirect(reverse('pending_consult'))
+            consult_details = consult.objects.get(pk=added_consult.pk)
+            return redirect('/consult/details/%s' % (consult_details.pk))
             #todo: redirect after showing message
-            return HttpResponse('<html><body>Redirecting...</body></html>')
     else:
         messages.error(request, "잘못 들어오셨어요")
-        redirect('home')
-        return HttpResponse('<html><body>Not logged in, Redirecting...</body></html>')
+    return redirect('home')
 
 
-def details(request, id):
+def details(request, pk):
     userid = request.user.id
-    chosen_consult = consult.objects.get(id=id)
+    chosen_consult = consult.objects.get(pk=pk)
     if not chosen_consult.user == request.user:
+        messages.error(request,"상담을 신청하신 분이 아니므로 접근이 거부됩니다.")
         return redirect('login')
     return render(request, 'medline/details.html', {'userid': userid, 'consult': chosen_consult})
+
+def emergency(request):
+    pass

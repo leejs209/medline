@@ -4,7 +4,7 @@
 {% block body %}
 <section class="section has-background-white-bis">
 
-    <div class="button"><a>back</a></div>
+    <input type=button value="Previous Page" onClick="history.go(-1);">back</input>
 
     <div class="container">
         <h2 class="title is-size-4">{{ x.title }}</h2>
@@ -12,6 +12,7 @@
         <figure class="image">
             <img src="{{ x.image.url }}">
         </figure>
+        <p class="content">{{ x.message }}</p>
     </div>
 
 </section>

@@ -35,7 +35,7 @@ urlpatterns = [
     path('consult/form/submit', medline.get_consultform, name='get_consultform'),
     path('consult/history/expired', medline.expired_consult, name='expired_consult'),
     path('medicalhub', medicalhub.adminpanel, name='admin_panel'),
-    path('consult/details/<int:id>', medline.details ,name='details')
+    path('consult/details/<int:pk>', medline.details, name='details'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

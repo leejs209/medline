@@ -1,0 +1,25 @@
+    <div class="columns is-multiline">
+    {% if history.count != 0 %}
+    {% load static %}
+        {% for x in history %}
+            <div class="column is-one-quarter">
+                <a href="/consult/details/{{x.pk}} %}">
+                    <div class="box">
+                        <div class="container">
+                            <h2 class="title is-size-4">{{ x.title }}</h2>
+                            <h2 class="subtitle has-text-grey-dark is-size-5">{{ x.added_datetime|date:"Y년 n월 j일 h:i" }}</h2>
+                        </div>
+                        <figure class="image">
+                            <img src="{{ x.image.url }}">
+                        </figure>
+                        <p>{{ x.shortened_message }}</p>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="hero-body has-text-centered">
+            <h2 class="subtitle">{{ empty_message }}</h2>
+        </div>
+    {% endif %}
+    </div>

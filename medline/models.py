@@ -22,15 +22,15 @@ class consult(models.Model):
     ]
 
     reservetime_choices = [
-        ('08:05:00', '아침시간'),
-        ('09:20:00', '1교시 후'),
-        ('10:20:00', '2교시 후'),
-        ('11:20:00', '3교시 후'),
-        ('12:20:00', '4교시 후'),
-        ('13:20:00', '5교시 후'),
-        ('14:10:00', '점심시간'),
-        ('15:10:00', '6교시 후'),
-        ('16:10:00', '7교시 후'),
+        ('bf', '아침시간'),
+        ('a1', '1교시 후'),    # after 1, 2, ...
+        ('a2', '2교시 후'),
+        ('a3', '3교시 후'),
+        ('a4', '4교시 후'),
+        ('a5', '5교시 후'),
+        ('lu', '점심시간'),
+        ('a6', '6교시 후'),
+        ('a7', '7교시 후'),
         # etc...
     ]
 
@@ -42,7 +42,7 @@ class consult(models.Model):
     message = models.TextField(blank=False)
     added_datetime = models.DateTimeField(auto_now_add=True, blank=False)
     reserve_date = models.DateField(blank=False, default=datetime.datetime.now)
-    reserve_time = models.TimeField(blank=False, choices=reservetime_choices, default=datetime.datetime.now)
+    reserve_time = models.CharField(blank=False, choices=reservetime_choices, default='a1', max_length=2)
 
     #status = models.CharField(max_length=5, choices=status_choices)
 
@@ -54,3 +54,11 @@ class consult(models.Model):
     def __str___(self):
         return self.title
 
+    @property
+    def shortened_message(self):
+        limit = 30
+        if len(self.message) <= limit:
+            return self.message
+        return self.message[0:limit]
+
+#class emergencyHistory(models.Model):
