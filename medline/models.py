@@ -3,6 +3,7 @@ import users.models as users
 import medline.models as medline
 from multiselectfield import MultiSelectField
 import datetime
+from django.utils import timezone
 
 
 
@@ -41,7 +42,7 @@ class consult(models.Model):
     title = models.CharField(max_length=100, default='', blank=False)
     message = models.TextField(blank=False)
     added_datetime = models.DateTimeField(auto_now_add=True, blank=False)
-    reserve_date = models.DateField(blank=False, default=datetime.datetime.now)
+    reserve_date = models.DateField(blank=False, default=timezone.now)
     reserve_time = models.CharField(blank=False, choices=reservetime_choices, default='a1', max_length=2)
 
     #status = models.CharField(max_length=5, choices=status_choices)

@@ -4,6 +4,7 @@ from .forms import ConsultForm
 from django.contrib import messages
 from django.urls import reverse
 import datetime
+from django.utils import timezone
 from django.http import HttpResponse
 
 def home(request):
@@ -44,7 +45,7 @@ def finished_consult(request):
 def pending_consult(request):
     name = '상담내역'
     userid = request.user.id
-    consulthistory = consult.objects.filter(user=userid, reserve_date__gt=datetime.datetime.now(),
+    consulthistory = consult.objects.filter(user=userid, reserve_date__gt=timezone.now(),
                                             is_finished=False)
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
@@ -55,7 +56,7 @@ def pending_consult(request):
 def expired_consult(request):
     name = '상담내역'
     userid = request.user.id
-    history = consult.objects.filter(user=userid, reserve_date__lte=datetime.datetime.now(),
+    history = consult.objects.filter(user=userid, reserve_date__lte=timezone.now(),
                                             is_finished=False)
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
