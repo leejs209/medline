@@ -26,7 +26,7 @@
         {% for x in history %}
             <div class="column is-one-quarter">
                 <div class="box">
-                    <a href="{% url details %}/">
+                    <a href="/consult/details/{{ x.pk }}">
                         <div class="container">
                             <h2 class="title is-size-4">{{ x.title }}</h2>
                             <h2 class="subtitle has-text-grey-dark is-size-5">

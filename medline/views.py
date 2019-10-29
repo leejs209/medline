@@ -6,6 +6,7 @@ from django.urls import reverse
 import datetime
 from django.utils import timezone
 from django.http import HttpResponse
+import os
 
 def home(request):
     name = '홈'
@@ -75,7 +76,7 @@ def get_consultform(request):
             added_consult.save()
             messages.success(request, '상담이 신청되었습니다')
             consult_details = consult.objects.get(pk=added_consult.pk)
-            return redirect('/consult/details/%s' % (consult_details.pk))
+            return redirect(os.path.join('/consult/details/', consult_details.pk))
             #todo: redirect after showing message
     else:
         messages.error(request, "잘못 들어오셨어요")
@@ -85,10 +86,19 @@ def get_consultform(request):
 def details(request, pk):
     userid = request.user.id
     chosen_consult = consult.objects.get(pk=pk)
-    if not chosen_consult.user == request.user:
+    if not request.user.is_superuser and not chosen_consult.user == request.user:
         messages.error(request,"상담을 신청하신 분이 아니므로 접근이 거부됩니다.")
         return redirect('login')
     return render(request, 'medline/details.html', {'userid': userid, 'consult': chosen_consult})
 
-def emergency(request):
+def delete_consult(request, pk):
+    if request.method == "POST":
+        pass
+        #todo: delete consult that has `pk`
+        #todo: redirect to original page (user or admin page, depending on user.is_superuser)
+    else:
+        messages.error(request, "잘못 들어오셨어요")
+    return redirect('home')
+
+def edit_consult(request, pk):
     pass

@@ -22,8 +22,11 @@
 - Achieve DRY 
     - by making `pending_consult`, `finished_consult`, and `expired_consult` into one with context with a boolean value
         - mostly finished with `/medline/consult_column.html`
+        
 - Add feature for admin-side medicine inventory management
+
 - Add model for prescribed medicine
+
 - Add client-side notification to remind students to take medicine and add a checkmark
     - Should be done with HTML5 Notification, client-side app, SMS, or Internet Messaging (Facebook Message / KakaoTalk)
     - How to confirm that someone actually took the medicine?
@@ -32,17 +35,24 @@
         -  
 - Add Inventory system for cataloging medicine [admin]
     - Option to add & delete medicine types
-        - Not just medicine, but also 
+        - Not just medicine's amount, but also other associated metadata
         - Properties
             - Name
             - Inventory status (Number)
-            - For whom it was prescribed for
+                - For whom it was prescribed for
             - 
             
     - Option to alert automatically when certain medicine is not enough
     - Maybe add expiration date for each medicine as well?
         - Then, would need to label each medicine pack with barcode / qr code (wasteful)
-        - Or maybe, a reusable sticker with a unique barcode can be matched with medicine itself
+        - Or maybe, a reusable sticker with a unique barcode can be matched with medicine 
+        
+- Add option to delete user to protect personal information
+    - Show a message that all their `consult` and `prescription` data will be gone
+    - data export option if enough time (as PDF)
+    
+- Add option to print `consult` and `prescription`
+    - https://docs.djangoproject.com/en/2.2/howto/outputting-pdf/
 ### Issues
 
 -  Bulma's navbar burger doesn't work

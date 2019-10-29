@@ -4,16 +4,29 @@
 {% block body %}
 <section class="section has-background-white-bis">
 
-    <input type=button value="Previous Page" onClick="history.go(-1);">back</input>
 
     <div class="container">
-        <h2 class="title is-size-4">{{ x.title }}</h2>
-        <h2 class="subtitle has-text-grey-dark is-size-5">{{ x.added_datetime|date:"Y년 n월 j일 h:i" }}</h2>
-        <figure class="image">
-            <img src="{{ x.image.url }}">
-        </figure>
-        <p class="content">{{ x.message }}</p>
+        <input type=button class="button" value="이전" onClick="history.go(-1);"/>
+        <h2 class="title is-size-4">{{ consult.title }}</h2>
+        <h2 class="subtitle has-text-grey-dark is-size-5">{{ consult.added_datetime|date:"Y년 n월 j일 h:i" }}</h2>
+        <div class="columns">
+            <div class="column">
+                <figure class="image">
+                    <img src="{{ consult.image.url }}">
+                </figure>
+            </div>
+            <div class="column">
+                <div class="buttons">
+                    <a class="button" href = "/consult/edit/{{ consult.pk }}">편집</a>
+                    <form action="/consult/delete/{{ consult.pk }}" method="post">{% csrf_token %}
+                        <input class="button is-danger is-center" type="submit" value="삭제">
+                    </form>
+                </div>
+                <div class="box">
+                    <p class="content">{{ consult.message }}</p>
+                </div>
+            </div>
+        </div>
     </div>
-
 </section>
 {% endblock %}

@@ -1,11 +1,9 @@
 from django.db import models
-import users.models as users
-import medline.models as medline
-from multiselectfield import MultiSelectField
-import datetime
 from django.utils import timezone
+from multiselectfield import MultiSelectField
 
-
+import users.models as users
+import medicalhub.models as medicalhub
 
 class consult(models.Model):
     symptoms_choices = [
@@ -62,4 +60,7 @@ class consult(models.Model):
             return self.message
         return self.message[0:limit]
 
-#class emergencyHistory(models.Model):
+class prescription(models.Model):
+    user = models.ForeignKey(users.CustomUser, on_delete=models.CASCADE)
+    medicine = models.ForeignKey(medicalhub.medicinePackage, on_delete=models.CASCADE)
+    schedule = models.CharField(max_length=100, blank=False) # store schedule [[datetime, medicineInventory, number_of_med, completed_status], ... ] as json
