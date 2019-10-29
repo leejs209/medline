@@ -63,4 +63,3 @@
     - change the template accordingly to show only one object
     - throw an error if tries to make more than one appointment
         - possibly remove the button to `consultform` upon already having made one
-- Error after submitting consultation... Should be immediately fixed
