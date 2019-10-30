@@ -15,21 +15,15 @@
             MedLine
         </a>
 
-        <button class="navbar-burger">
+        <div class="navbar-burger burger" onclick="document.querySelector('.navbar-menu').classList.toggle('is-active');">
             <span></span>
             <span></span>
             <span></span>
-
-        </button>
+        </div>
     </div>
 
     <div class="navbar-menu">
         <div class="navbar-start">
-            {% if user.is_superuser %}
-            <a class="navbar-item has-text-info" href="{% url 'medicalhub_home' %}">
-                관리자 패널
-            </a>
-            {% endif %}
             <a class="navbar-item" href="{%  url 'consultform' %}">
                 상담 신청
             </a>
@@ -39,6 +33,11 @@
             <a class="navbar-item" href="{% url 'contact' %}">
                 연락처
             </a>
+            {% if user.is_superuser %}
+            <a class="navbar-item has-text-info" href="{% url 'medicalhub_home' %}">
+                관리자 패널
+            </a>
+            {% endif %}
             <a class="navbar-item has-text-danger">
                 긴급 연결
             </a>

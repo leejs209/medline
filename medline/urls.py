@@ -39,6 +39,7 @@ urlpatterns = [
     path('consult/delete/<int:pk>', medline.delete_consult, name='delete_consult'),
     path('consult/edit/<int:pk>', medline.edit_consult, name='edit_consult'),
     path('consult/finish/<int:pk>', medline.finish_consult, name='finish_consult'),
+    path('consult/operation_complete', medline.operation_complete, name='operation_complete'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

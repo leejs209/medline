@@ -46,7 +46,7 @@ def finished_consult(request):
 def pending_consult(request):
     name = '상담내역'
     userid = request.user.id
-    consulthistory = consult.objects.filter(user=userid, reserve_date__gt=timezone.now(),
+    consulthistory = consult.objects.filter(user=userid, reserve_date__gte=timezone.now(),
                                             is_finished=False)
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
@@ -57,7 +57,7 @@ def pending_consult(request):
 def expired_consult(request):
     name = '상담내역'
     userid = request.user.id
-    history = consult.objects.filter(user=userid, reserve_date__lte=timezone.now(),
+    history = consult.objects.filter(user=userid, reserve_date__lt=timezone.now(),
                                             is_finished=False)
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
@@ -76,10 +76,8 @@ def get_consultform(request):
             added_consult.save()
             messages.success(request, '상담이 신청되었습니다')
             consult_details = consult.objects.get(pk=added_consult.pk)
-            return redirect(os.path.join('/consult/details/', consult_details.pk))
-            #todo: redirect after showing message
-    else:
-        messages.error(request, "잘못 들어오셨어요")
+            return redirect('/consult/details/%s' % consult_details.pk)
+    messages.error(request, "잘못 들어오셨어요")
     return redirect('home')
 
 
@@ -96,13 +94,16 @@ def delete_consult(request, pk):
     if request.method == "POST":
         if (chosen_consult.user == request.user or request.user.is_superuser):
             chosen_consult.delete()
-            return redirect('/details/%s' % pk)
+            return redirect('operation_complete')
             #todo: redirect to original page (user or admin page, depending on user.is_superuser)
         else:
             messages.error(request, "상담을 신청하신 분이나 관리자가 아니므로 접근이 거부됩니다.")
     else:
         messages.error(request, "잘못 들어오셨어요")
     return redirect('home')
+
+def operation_complete(request):
+    return render(request,'medline/operation_complete.html')
 
 def edit_consult(request, pk):
     pass

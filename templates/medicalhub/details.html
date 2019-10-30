@@ -1,12 +1,11 @@
-{% extends 'medline/base.html' %}
+{% extends 'medicalhub/base.html' %}
 
 {% block body %}
 <section class="section has-background-white-bis">
 
 
     <div class="container">
-        <a class="button" href="{% url "expired_consult" %}">목록</a>
-        <!-- <input type=button class="button" value="이전" onClick="history.go(-1);"/> -->
+        <input type=button class="button" value="이전" onClick="history.go(-1);"/>
         <h2 class="title is-size-4">{{ consult.title }}</h2>
         <h2 class="subtitle has-text-grey-dark is-size-5">{{ consult.added_datetime|date:"Y년 n월 j일 h:i" }}</h2>
         <div class="columns">

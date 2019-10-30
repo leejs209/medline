@@ -1,48 +1,45 @@
 ### Todo
 
 - Custom user creation form for:
-   - Localised form verification messages
-        - In Korean
    - CAPTCHA
         - Stop BruteForce
    - Student Verifiation -> Possible solutions
         - __Barcode matching with School Library DB__
         - Manual checking by Infirmary T 
         - Automatic sign-up via default ID/PW
-            - PW would need to be unique --> bithday, etc.
+            - PW would need to be unique --> birthday, etc.
+        - Phone number verification
+        
 - Admin Panel
-    - Should be easy to use
     - Can receive alerts and play Emergency Sound
-    - <Probably isn't needed> Can scan QR Code containing a primaryKey of a consult object and show it on the panel
     - Can change status(`is_finished`) of object `consult` 
         - add a check mark via `form`
+     - medicine inventory management
+
 - Client-side Emergency Streaming
     - Utilizing OpenCV Library?
-- Client Panel in the Infirmary for students that have not made a reservation previously
-    - Problably safe to use similar code from the app `medline`
-- Achieve DRY 
-    - by making `pending_consult`, `finished_consult`, and `expired_consult` into one with context with a boolean value
-        - mostly finished with `/medline/consult_column.html`
-        
-- Add feature for admin-side medicine inventory management
+    
+- Client Panel
+    - For students that have not made a reservation previously
+        - Problably safe to use similar code from the app `medline`
+    - For students that have already made a reservation
+        - <Probably isn't needed> Can scan QR Code containing a primaryKey of a consult object and show it on the panel
 
 - Add model for prescribed medicine
 
-- Add client-side notification to remind students to take medicine and add a checkmark
-    - Should be done with HTML5 Notification, client-side app, SMS, or Internet Messaging (Facebook Message / KakaoTalk)
+- Client notification to remind students to take medicine
+    - HTML5 Notification
     - How to confirm that someone actually took the medicine?
         - Possibly, add a Machine Learning algorithm to make sure that the medicine is actually eaten
         - Or simply make it so that students can respond to the notification (e.g. "Did you take the medicine?")
-        -  
 - Add Inventory system for cataloging medicine [admin]
-    - Option to add & delete medicine types
-        - Not just medicine's amount, but also other associated metadata
-        - Properties
-            - Name
-            - Inventory status (Number)
-                - For whom it was prescribed for
-            - 
-            
+    - medicineType
+        - Name
+        - description
+        - Barcode
+    - medicinePackage
+        - number
+        - location            
     - Option to alert automatically when certain medicine is not enough
     - Maybe add expiration date for each medicine as well?
         - Then, would need to label each medicine pack with barcode / qr code (wasteful)
@@ -57,9 +54,7 @@
     
 
 ### Issues
-
--  Bulma's navbar burger doesn't work
-    - may need to implement seperate menu for mobile devices using the tag `is-mobile`
+- Need to add `edit_consult` feature on clicked
 - Add types of messages to bulma's popup message
     - e.g. `{% if tag == 'warning` %} is-warning {% elif ... %} {% endif%}`
 - Make it so that only one `pending_consult` can be created
