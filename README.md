@@ -15,6 +15,7 @@
     - Can receive alerts and play Emergency Sound
     - <Probably isn't needed> Can scan QR Code containing a primaryKey of a consult object and show it on the panel
     - Can change status(`is_finished`) of object `consult` 
+        - add a check mark via `form`
 - Client-side Emergency Streaming
     - Utilizing OpenCV Library?
 - Client Panel in the Infirmary for students that have not made a reservation previously
@@ -53,6 +54,8 @@
     
 - Add option to print `consult` and `prescription`
     - https://docs.djangoproject.com/en/2.2/howto/outputting-pdf/
+    
+
 ### Issues
 
 -  Bulma's navbar burger doesn't work

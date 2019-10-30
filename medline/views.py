@@ -86,19 +86,26 @@ def get_consultform(request):
 def details(request, pk):
     userid = request.user.id
     chosen_consult = consult.objects.get(pk=pk)
-    if not request.user.is_superuser and not chosen_consult.user == request.user:
-        messages.error(request,"상담을 신청하신 분이 아니므로 접근이 거부됩니다.")
-        return redirect('login')
-    return render(request, 'medline/details.html', {'userid': userid, 'consult': chosen_consult})
+    if request.user.is_superuser or chosen_consult.user == request.user:
+        return render(request, 'medline/details.html', {'userid': userid, 'consult': chosen_consult})
+    messages.error(request, "상담을 신청하신 분이나 관리자가 아니므로 접근이 거부됩니다.")
+    return redirect('login')
 
 def delete_consult(request, pk):
+    chosen_consult = consult.objects.get(pk=pk)
     if request.method == "POST":
-        pass
-        #todo: delete consult that has `pk`
-        #todo: redirect to original page (user or admin page, depending on user.is_superuser)
+        if (chosen_consult.user == request.user or request.user.is_superuser):
+            chosen_consult.delete()
+            return redirect('/details/%s' % pk)
+            #todo: redirect to original page (user or admin page, depending on user.is_superuser)
+        else:
+            messages.error(request, "상담을 신청하신 분이나 관리자가 아니므로 접근이 거부됩니다.")
     else:
         messages.error(request, "잘못 들어오셨어요")
     return redirect('home')
 
 def edit_consult(request, pk):
+    pass
+
+def finish_consult(request,pk):
     pass

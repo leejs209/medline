@@ -25,10 +25,10 @@ class CustomUser(AbstractUser):
         ('13', '13반'),
         ('14', '14반'),
     ]
-    name = models.CharField(max_length=30, blank=False, default='홍길동')
+    name = models.CharField(max_length=30, blank=False, default='')
     barcode = models.CharField(max_length=50)
     grade = models.CharField(max_length=2, choices=grade_choices, blank=False, default='h1')
     division = models.CharField(max_length=2, choices=division_choices, blank=False, default='1')
-    studentno = models.SmallIntegerField( default=1)
+    studentno = models.SmallIntegerField(default=1)
 
     # add profile image with models.filepath and uploads
