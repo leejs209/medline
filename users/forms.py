@@ -7,7 +7,13 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ('grade', 'division', 'studentno', 'name', 'barcode', 'username')
-
+        labels = {
+            'grade': '학년',
+            'division': '학반',
+            'studentno': '번호',
+            'name': '성명',
+            'barcode': '바코드',
+        }
     field_order = ['grade', 'division', 'studentno', 'name', 'barcode', 'username']
 
 class CustomUserChangeForm(UserChangeForm):

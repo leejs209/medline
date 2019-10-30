@@ -5,7 +5,9 @@
 
 
     <div class="container">
-        <a class="button" href="{% url "expired_consult" %}">목록</a>
+
+
+        {% include 'medline/show_message.html' %}
         <!-- <input type=button class="button" value="이전" onClick="history.go(-1);"/> -->
         <h2 class="title is-size-4">{{ consult.title }}</h2>
         <h2 class="subtitle has-text-grey-dark is-size-5">{{ consult.added_datetime|date:"Y년 n월 j일 h:i" }}</h2>
@@ -17,10 +19,6 @@
             </div>
             <div class="column">
                 <div class="buttons">
-                    <a class="button" href = "/consult/edit/{{ consult.pk }}">편집</a>
-                    <form action="/consult/delete/{{ consult.pk }}" method="post">{% csrf_token %}
-                        <input class="button is-danger is-center" type="submit" value="삭제">
-                    </form>
                     {% if userid.is_superuser %}
                         {% if not consult.is_finished %}
                         <form action="/consult/finish/{{ consult.pk }}" method="post">{% csrf_token %}
@@ -37,6 +35,13 @@
                     <p class="content">{{ consult.message }}</p>
                 </div>
             </div>
+        </div>
+        <div class="buttons is-centered">
+            <a class="button" href="{% url "expired_consult" %}">상담내역</a>
+            <a class="button is-success" href = "/consult/edit/{{ consult.pk }}">편집</a>
+            <form action="/consult/delete/{{ consult.pk }}" method="post">{% csrf_token %}
+                <input class="button is-danger" type="submit" value="삭제">
+            </form>
         </div>
     </div>
 </section>

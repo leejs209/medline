@@ -46,7 +46,7 @@ class consult(models.Model):
     #status = models.CharField(max_length=5, choices=status_choices)
 
     image = models.ImageField(upload_to="consult_image", blank=True, default="consult_image/notfound.png")
-    symptoms = MultiSelectField(choices=symptoms_choices, blank=False, max_choices=5, max_length=30)
+    symptoms = MultiSelectField(choices=symptoms_choices, blank=True, max_length=30)
     is_finished = models.BooleanField(default=False)
     #def update(self):
         # logic to update the status only for objects that need to have its `status` updated
