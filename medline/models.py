@@ -58,7 +58,7 @@ class consult(models.Model):
         limit = 30
         if len(self.message) <= limit:
             return self.message
-        return self.message[0:limit]
+        return self.message[0:limit] + '...'
 
 class prescription(models.Model):
     user = models.ForeignKey(users.CustomUser, on_delete=models.CASCADE)
