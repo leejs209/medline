@@ -37,7 +37,7 @@ class consult(models.Model):
     # CASCADE means that all of an user's consulting history will be deleted upon deletion of the user
     user = models.ForeignKey(users.CustomUser, on_delete=models.CASCADE)
 
-    title = models.CharField(max_length=100, default='', blank=False)
+    title = models.CharField(max_length=50, default='', blank=False)
     message = models.TextField(blank=False)
     added_datetime = models.DateTimeField(auto_now_add=True, blank=False)
     reserve_date = models.DateField(blank=False, default=timezone.now)
@@ -46,7 +46,7 @@ class consult(models.Model):
     #status = models.CharField(max_length=5, choices=status_choices)
 
     image = models.ImageField(upload_to="consult_image", blank=True, default="consult_image/notfound.png")
-    symptoms = MultiSelectField(choices=symptoms_choices, blank=True, max_length=30)
+    symptoms = MultiSelectField(choices=symptoms_choices, blank=True, max_length=300)
     is_finished = models.BooleanField(default=False)
     #def update(self):
         # logic to update the status only for objects that need to have its `status` updated

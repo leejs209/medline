@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ title }} | 대륜고 MedLine</title>
+    <title>404 | 대륜고 MedLine</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css" />
     {% progressive_web_app_meta %}
 </head>
@@ -64,13 +64,16 @@
     </div>
 </nav>
 
+<div class="hero-body has-background-light">
+    <h1 class="title has-text-centered">404: 찾으시는 페이지가 존재하지 않습니다.</h1>
+    <div class="buttons is-centered">
+        <a class="button is-primary" href="{% url 'home' %}">홈</a>
+    </div>
+</div>
 
-{% block body %}
-        {% endblock %}
-
-        <footer class="footer">
-           <p class="content has-text-centered">대륜고등학교 메드라인 ©2019</p>
-        </footer>
+<footer class="footer">
+   <p class="content has-text-centered">대륜고등학교 메드라인 ©2019</p>
+</footer>
 
 
 

@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.urls import reverse
 import datetime
 from django.utils import timezone
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 import os
 
 def home(request):
@@ -77,6 +77,8 @@ def get_consultform(request):
             messages.success(request, '상담이 신청되었습니다')
             consult_details = consult.objects.get(pk=added_consult.pk)
             return redirect('/consult/details/%s' % consult_details.pk)
+        else:
+            messages.error(request, "잘못된 입력입니다")
     else:
         messages.error(request, "잘못 들어오셨어요")
     return redirect('home')
@@ -84,10 +86,13 @@ def get_consultform(request):
 
 def details(request, pk):
     userid = request.user.id
-    chosen_consult = consult.objects.get(pk=pk)
-    if request.user.is_superuser or chosen_consult.user == request.user:
+    try:
+        chosen_consult = consult.objects.get(pk=pk)
+    except:
+        raise Http404('<h1>존재하지 않는 상담입니다</h1>')
+    if chosen_consult.user == request.user:
         return render(request, 'medline/details.html', {'userid': userid, 'consult': chosen_consult})
-    messages.error(request, "상담을 신청하신 분이나 관리자가 아니므로 접근이 거부됩니다.")
+    messages.error(request, "상담을 신청하신 분이 아니므로 접근이 거부됩니다.")
     return redirect('login')
 
 def delete_consult(request, pk):
@@ -103,11 +108,23 @@ def delete_consult(request, pk):
         messages.error(request, "잘못 들어오셨어요")
     return redirect('home')
 
+
+
+
 def operation_complete(request):
     return render(request,'medline/operation_complete.html')
 
 def edit_consult(request, pk):
     pass
 
-def finish_consult(request,pk):
-    pass
+def finish_consult(request, pk):
+    chosen_consult = consult.objects.get(pk=pk)
+    if request.method == "POST":
+        if (request.user.is_superuser):
+            consult.objects.filter(pk=pk).update(is_finished=True)
+            return redirect('medicalhub/details/%s' % pk)
+        else:
+            messages.error(request, "관리자가 아니므로 접근이 거부됩니다.")
+    else:
+        messages.error(request, "잘못 들어오셨어요")
+    return redirect('home')

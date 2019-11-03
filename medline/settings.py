@@ -24,7 +24,7 @@ SECRET_KEY = '_fqy2e7@ad=vgh)wy3@jy4gnv6psd)knyv1$53$&rpy@efbr85'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.123.108']
 
 # Application definition
 
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'medicalhub',
     'multiselectfield',
     'bulma',
-    'pwa_webpush',
+    'pwa',
 ]
 
 MIDDLEWARE = [
@@ -119,7 +119,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
@@ -131,24 +133,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 PWA_APP_NAME = '대륜고 Medline'
-PWA_APP_DESCRIPTION = "대륜고등학교 보건실 플랫폼"
+PWA_APP_DESCRIPTION = "대륜고등학교의 보건실 플릿폼"
 PWA_APP_THEME_COLOR = '#0A0302'
 PWA_APP_BACKGROUND_COLOR = '#ffffff'
 PWA_APP_DISPLAY = 'standalone'
-PWA_APP_SCOPE = '/',
+PWA_APP_SCOPE = '/'
 PWA_APP_ORIENTATION = 'any'
 PWA_APP_START_URL = '/'
-PWA_APP_ICONS = [
-    {
-        'src': '/static/images/my_app_icon.png',
-        'sizes': '160x160'
-    }
-]
-PWA_APP_SPLASH_SCREEN = [
-    {
-        'src': '/static/images/icons/splash-640x1136.png',
-        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
-    }
-]
 PWA_APP_DIR = 'ltr'
-PWA_APP_LANG = 'en-US'
+PWA_APP_LANG = 'ko-KR'

@@ -9,30 +9,13 @@
 </head>
 <body>
 
-<nav class="navbar is-info">
+<nav class="navbar is-danger">
     <div class="navbar-brand">
         <a class="navbar-item is-size-4" href="{% url 'medicalhub_home' %}">
-            MedLine 관리
+            긴급 연결
         </a>
-        <div class="navbar-burger burger" onclick="document.querySelector('.navbar-menu').classList.toggle('is-active');">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </div>
-
-
-
-    <div class="navbar-menu">
-        <div class="navbar-start ">
-            <a class="navbar-item " href="{%  url 'home' %}">
-                Medline 홈
-            </a>
-
     </div>
 </nav>
-
-
 
 {% block body %}
 {% endblock %}

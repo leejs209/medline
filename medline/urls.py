@@ -35,11 +35,13 @@ urlpatterns = [
     path('consult/form/submit', medline.get_consultform, name='get_consultform'),
     path('consult/history/expired', medline.expired_consult, name='expired_consult'),
     path('medicalhub', medicalhub.home, name='medicalhub_home'),
+    path('medicalhub/details/<int:pk>', medicalhub.details, name='details'),
     path('consult/details/<int:pk>', medline.details, name='details'),
     path('consult/delete/<int:pk>', medline.delete_consult, name='delete_consult'),
     path('consult/edit/<int:pk>', medline.edit_consult, name='edit_consult'),
     path('consult/finish/<int:pk>', medline.finish_consult, name='finish_consult'),
     path('consult/operation_complete', medline.operation_complete, name='operation_complete'),
+    path('', include('pwa.urls')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
