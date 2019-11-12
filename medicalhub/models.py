@@ -4,12 +4,16 @@ from multiselectfield import MultiSelectField
 import medline.models as medline
 import users.models as users
 
-class medicineType(models.Model):
-    name = models.CharField(max_length=30, blank=False, default="")
-    description = models.TextField(blank=True, default="")
-    code = models.CharField(max_length = 10, blank=False)       #find out how much chars to use as max_length
 
-class medicinePackage(models.Model):
-    type = models.ForeignKey(medicineType, on_delete=models.CASCADE)
-    number = models.IntegerField(blank=False)
-    location = models.CharField(max_length=30)
+class MedicineType(models.Model):
+    name = models.CharField(max_length=30, blank=False, default="")
+    image = models.ImageField(upload_to="consult_image", blank=True, default="consult_image/notfound.png")
+    description = models.TextField(blank=True, default="")
+    code = models.CharField(max_length=10, blank=False)  # max_length is arbitrary; find out what is proper
+
+    @property
+    def shortened_description(self):
+        limit = 30
+        if len(self.description) <= limit:
+            return self.description
+        return self.description[0:limit] + '...'

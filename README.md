@@ -15,9 +15,6 @@
     - Can change status(`is_finished`) of object `consult` 
         - add a check mark via `form`
      - medicine inventory management
-
-- Client-side Emergency Streaming
-    - Utilizing OpenCV Library?
     
 - Client Panel
     - For students that have not made a reservation previously
@@ -30,7 +27,6 @@
 - Client notification to remind students to take medicine
     - HTML5 Notification
     - How to confirm that someone actually took the medicine?
-        - Possibly, add a Machine Learning algorithm to make sure that the medicine is actually eaten
         - Or simply make it so that students can respond to the notification (e.g. "Did you take the medicine?")
 - Add Inventory system for cataloging medicine [admin]
     - medicineType
@@ -54,7 +50,6 @@
     
 
 ### Issues
-- Need to add `edit_consult` feature on clicked
 - Add types of messages to bulma's popup message
     - e.g. `{% if tag == 'warning` %} is-warning {% elif ... %} {% endif%}`
 - Make it so that only one `pending_consult` can be created

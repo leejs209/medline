@@ -9,7 +9,7 @@
 
         {% include 'medline/show_message.html' %}
         <!-- <input type=button class="button" value="이전" onClick="history.go(-1);"/> -->
-        <h2 class="title is-size-4">{{ consult.title }}</h2>
+        <h2 class="title is-size-4">{% if consult.is_finished %}[완료] {% endif %}{{ consult.title }}</h2>
         <h2 class="subtitle has-text-grey-dark is-size-5">{{ consult.added_datetime|date:"Y년 n월 j일 h:i" }}</h2>
         <div class="columns">
             <div class="column">
@@ -18,19 +18,6 @@
                 </figure>
             </div>
             <div class="column">
-                <div class="buttons">
-                    {% if userid.is_superuser %}
-                        {% if not consult.is_finished %}
-                        <form action="/consult/finish/{{ consult.pk }}" method="post">{% csrf_token %}
-                            <input class="button is-info is-center" type="submit" value="완료">
-                        </form>
-                        {% else %}
-                        <form action="/consult/finish/{{ consult.pk }}" method="post">{% csrf_token %}
-                            <input class="button is-danger is-center" type="submit" value="완료 취소">
-                        </form>
-                        {% endif %}
-                    {% endif %}
-                </div>
                 <div class="box">
                     <p class="content">{{ consult.message }}</p>
                 </div>
@@ -39,10 +26,20 @@
         <div class="buttons is-centered">
             <a class="button is-info" href="{% url "medicalhub_home" %}">홈</a>
 
-            <a class="button is-success" onclick="window.open('http://127.0.0.1:8000/admin/medline/consult/{{ consult.pk }}','popup','width=600,height=600'); return false;">편집</a>
-            <form action="/consult/finish/{{ consult.pk }}" method="post">{% csrf_token %}
-                <input class="button" type="submit" value="완료">
-            </form>
+            <a class="button is-success" onclick="window.open('http://{{ request.get_host }}/admin/medline/consult/{{ consult.pk }}','popup','width=600,height=600'); return false;">편집</a>
+
+            {% if user.is_superuser %}
+                {% if not consult.is_finished %}
+                <form action="/consult/finish/{{ consult.pk }}" method="post">{% csrf_token %}
+                    <input class="button is-center" type="submit" value="완료">
+                </form>
+                {% else %}
+                <form action="/consult/undo_finish/{{ consult.pk }}" method="post">{% csrf_token %}
+                    <input class="button is-center" type="submit" value="완료 취소">
+                </form>
+                {% endif %}
+            {% endif %}
+
             <form action="/consult/delete/{{ consult.pk }}" method="post">{% csrf_token %}
                 <input class="button is-danger" type="submit" value="삭제">
             </form>

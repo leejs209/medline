@@ -4,7 +4,8 @@ from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import CustomUser
-from medline.models import consult
+import medline.models as medline
+import medicalhub.models as medicalhub
 
 
 class CustomUserAdmin(UserAdmin):
@@ -15,4 +16,6 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register(consult)
+admin.site.register(medline.consult)
+admin.site.register(medline.Prescription)
+admin.site.register(medicalhub.MedicineType)

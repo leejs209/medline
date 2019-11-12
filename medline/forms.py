@@ -1,5 +1,6 @@
 from django import forms
 from medline.models import consult
+from medicalhub.models import MedicineType
 
 
 class ConsultForm(forms.ModelForm):
@@ -15,4 +16,4 @@ class ConsultForm(forms.ModelForm):
             'reserve_time': '상담 시간',
         }
 
-    field_order = ['symptoms','reserve_date', 'reserve_time', 'title', 'message', 'image']
+    field_order = ['symptoms', 'reserve_date', 'reserve_time', 'title', 'message', 'image']

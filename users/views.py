@@ -6,8 +6,8 @@ from django.contrib import messages
 
 def signup(request):
     name = '회원가입'
-    userid = request.user.id
-    if userid != None:
+    user = request.user
+    if user is not None:
         return redirect('home')
 
     if request.method == "POST":
@@ -18,10 +18,9 @@ def signup(request):
             return redirect('login')
     else:
         form = CustomUserCreationForm()
-    return render(request, 'registration/signup.html', {'form': form, 'userid': userid, 'title': name})
+    return render(request, 'registration/signup.html', {'form': form, 'title': name})
 
 
 def login(request):
     name = '로그인'
-    userid = request.user.id
-    return render(request, 'registration/login.html', {'userid': userid, 'title': name})
+    return render(request, 'registration/login.html', {'title': name})

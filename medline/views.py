@@ -6,20 +6,17 @@ from django.urls import reverse
 import datetime
 from django.utils import timezone
 from django.http import HttpResponse, Http404
-import os
+
 
 def home(request):
     name = '홈'
-    userid = request.user.id
-
-    return render(request, 'medline/home.html', {'userid': userid, 'title': name})
+    return render(request, 'medline/home.html', {'title': name})
 
 
 def contact(request):
     name = '연락처'
-    userid = request.user.id
 
-    return render(request, 'medline/contact.html', {'userid': userid, 'title': name})
+    return render(request, 'medline/contact.html', {'title': name})
 
 
 def consultform(request):
@@ -58,7 +55,7 @@ def expired_consult(request):
     name = '상담내역'
     userid = request.user.id
     history = consult.objects.filter(user=userid, reserve_date__lt=timezone.now(),
-                                            is_finished=False)
+                                     is_finished=False)
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
         return redirect('login')
@@ -85,15 +82,15 @@ def get_consultform(request):
 
 
 def details(request, pk):
-    userid = request.user.id
     try:
         chosen_consult = consult.objects.get(pk=pk)
     except:
         raise Http404('<h1>존재하지 않는 상담입니다</h1>')
     if chosen_consult.user == request.user:
-        return render(request, 'medline/details.html', {'userid': userid, 'consult': chosen_consult})
+        return render(request, 'medline/details.html', {'consult': chosen_consult})
     messages.error(request, "상담을 신청하신 분이 아니므로 접근이 거부됩니다.")
     return redirect('login')
+
 
 def delete_consult(request, pk):
     chosen_consult = consult.objects.get(pk=pk)
@@ -101,7 +98,7 @@ def delete_consult(request, pk):
         if (chosen_consult.user == request.user or request.user.is_superuser):
             chosen_consult.delete()
             return redirect('operation_complete')
-            #todo: redirect to original page (user or admin page, depending on user.is_superuser)
+            # todo: redirect to original page (user or admin page, depending on user.is_superuser)
         else:
             messages.error(request, "상담을 신청하신 분이나 관리자가 아니므로 접근이 거부됩니다.")
     else:
@@ -109,20 +106,30 @@ def delete_consult(request, pk):
     return redirect('home')
 
 
-
-
 def operation_complete(request):
-    return render(request,'medline/operation_complete.html')
+    return render(request, 'medline/operation_complete.html')
+
 
 def edit_consult(request, pk):
     pass
 
+
 def finish_consult(request, pk):
-    chosen_consult = consult.objects.get(pk=pk)
     if request.method == "POST":
         if (request.user.is_superuser):
             consult.objects.filter(pk=pk).update(is_finished=True)
-            return redirect('medicalhub/details/%s' % pk)
+            return redirect('/medicalhub/details/%s' % pk)
+        else:
+            messages.error(request, "관리자가 아니므로 접근이 거부됩니다.")
+    else:
+        messages.error(request, "잘못 들어오셨어요")
+    return redirect('home')
+
+def undo_finish_consult(request,pk):
+    if request.method == "POST":
+        if (request.user.is_superuser):
+            consult.objects.filter(pk=pk).update(is_finished=False)
+            return redirect('/medicalhub/details/%s' % pk)
         else:
             messages.error(request, "관리자가 아니므로 접근이 거부됩니다.")
     else:

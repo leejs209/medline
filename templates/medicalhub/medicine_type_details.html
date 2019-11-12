@@ -1,0 +1,28 @@
+{% extends 'medicalhub/base.html' %}
+
+{% block body %}
+<section class="section has-background-white-bis">
+
+
+    <div class="container">
+
+
+        {% include 'medline/show_message.html' %}
+        <!-- <input type=button class="button" value="이전" onClick="history.go(-1);"/> -->
+        <h2 class="title is-size-4">{{ medicine_type.name }}</h2>
+        <div class="columns">
+            <div class="column">
+                <figure class="image">
+                    <img src="{{ medicine_type.image.url }}">
+                </figure>
+            </div>
+            <div class="column">
+                <div class="box">
+                    <p class="content">{{ medicine_type.description }}</p>
+                </div>
+                <a class="button is-success" onclick="window.open('http://{{ request.get_host }}/admin/medicalhub/medicinetype/{{ medicine_type.pk }}','popup','width=600,height=600'); return false;">편집</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

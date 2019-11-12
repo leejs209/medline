@@ -1,0 +1,16 @@
+{% extends 'medicalhub/base.html' %}
+
+{% load bulma_tags %}
+{% block body %}
+<section class="section has-background-white-bis">
+    <h1 class="title ">{{ title }}</h1>
+    <h2 class="subtitle">약 정보를 입력해주세요</h2>
+    <form method="post" action="{% url 'get_medicine_type_form' %}">
+        {% csrf_token %}
+        {{ form|bulma }}
+        <div class="container has-text-centered">
+            <button class="button is-medium" type="submit">제출</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

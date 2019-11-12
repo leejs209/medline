@@ -5,6 +5,7 @@ from multiselectfield import MultiSelectField
 import users.models as users
 import medicalhub.models as medicalhub
 
+
 class consult(models.Model):
     symptoms_choices = [
         ('a1', '복통'),
@@ -22,7 +23,7 @@ class consult(models.Model):
 
     reservetime_choices = [
         ('bf', '아침시간'),
-        ('a1', '1교시 후'),    # after 1, 2, ...
+        ('a1', '1교시 후'),  # after 1, 2, ...
         ('a2', '2교시 후'),
         ('a3', '3교시 후'),
         ('a4', '4교시 후'),
@@ -33,7 +34,6 @@ class consult(models.Model):
         # etc...
     ]
 
-
     # CASCADE means that all of an user's consulting history will be deleted upon deletion of the user
     user = models.ForeignKey(users.CustomUser, on_delete=models.CASCADE)
 
@@ -43,13 +43,14 @@ class consult(models.Model):
     reserve_date = models.DateField(blank=False, default=timezone.now)
     reserve_time = models.CharField(blank=False, choices=reservetime_choices, default='a1', max_length=2)
 
-    #status = models.CharField(max_length=5, choices=status_choices)
+    # status = models.CharField(max_length=5, choices=status_choices)
 
     image = models.ImageField(upload_to="consult_image", blank=True, default="consult_image/notfound.png")
     symptoms = MultiSelectField(choices=symptoms_choices, blank=True, max_length=300)
     is_finished = models.BooleanField(default=False)
-    #def update(self):
-        # logic to update the status only for objects that need to have its `status` updated
+
+    # def update(self):
+    # logic to update the status only for objects that need to have its `status` updated
     def __str___(self):
         return self.title
 
@@ -60,7 +61,19 @@ class consult(models.Model):
             return self.message
         return self.message[0:limit] + '...'
 
-class prescription(models.Model):
+
+class Prescription(models.Model):
     user = models.ForeignKey(users.CustomUser, on_delete=models.CASCADE)
-    medicine = models.ForeignKey(medicalhub.medicinePackage, on_delete=models.CASCADE)
-    schedule = models.CharField(max_length=100, blank=False) # store schedule [[datetime, medicineInventory, number_of_med, completed_status], ... ] as json
+    consult = models.ForeignKey(consult, on_delete=models.CASCADE, null=True, blank=True)
+
+
+class PrescribedMedicine(models.Model):
+    schedule_choices = [
+        ('morning', '아침'),
+        ('lunch', '점심'),
+        ('dinner', '저녁'),
+    ]
+
+    medicine = models.ForeignKey(medicalhub.MedicineType, on_delete=models.CASCADE)
+    schedule = MultiSelectField(choices=schedule_choices, blank=True, max_length=300)
+    prescription = models.ForeignKey(Prescription, on_delete=models.CASCADE)

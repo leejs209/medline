@@ -18,19 +18,6 @@
                 </figure>
             </div>
             <div class="column">
-                <div class="buttons">
-                    {% if userid.is_superuser %}
-                        {% if not consult.is_finished %}
-                        <form action="/consult/finish/{{ consult.pk }}" method="post">{% csrf_token %}
-                            <input class="button is-info is-center" type="submit" value="완료">
-                        </form>
-                        {% else %}
-                        <form action="/consult/finish/{{ consult.pk }}" method="post">{% csrf_token %}
-                            <input class="button is-danger is-center" type="submit" value="완료 취소">
-                        </form>
-                        {% endif %}
-                    {% endif %}
-                </div>
                 <div class="box">
                     <p class="content">{{ consult.message }}</p>
                 </div>
@@ -38,7 +25,6 @@
         </div>
         <div class="buttons is-centered">
             <a class="button" href="{% url "expired_consult" %}">상담내역</a>
-            <a class="button is-success" href = "/consult/edit/{{ consult.pk }}">편집</a>
             <form action="/consult/delete/{{ consult.pk }}" method="post">{% csrf_token %}
                 <input class="button is-danger" type="submit" value="삭제">
             </form>
