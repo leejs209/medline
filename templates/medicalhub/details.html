@@ -21,13 +21,25 @@
                 <div class="box">
                     <p class="content">{{ consult.message }}</p>
                 </div>
+                <h1 class="title is-size-4">처방</h1>
+                <div class="container">
+                    <div class="columns">
+                        {% for x in prescription %}
+                        <div class="column is-one-quarter">
+                            <div class="box">
+                                <h1 class="subtitle">{{ x.medicine.name }}</h1>
+                                <p class="content">{{ x.schedule }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
         <div class="buttons is-centered">
-            <a class="button is-info" href="{% url "medicalhub_home" %}">홈</a>
-
+            <a class="button" href="{% url "medicalhub_home" %}">홈</a>
+            <a class="button is-primary" href="{% url 'prescription_form' consult_pk=consult.pk %}">처방</a>
             <a class="button is-success" onclick="window.open('http://{{ request.get_host }}/admin/medline/consult/{{ consult.pk }}','popup','width=600,height=600'); return false;">편집</a>
-
             {% if user.is_superuser %}
                 {% if not consult.is_finished %}
                 <form action="/consult/finish/{{ consult.pk }}" method="post">{% csrf_token %}

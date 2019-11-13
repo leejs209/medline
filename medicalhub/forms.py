@@ -1,5 +1,6 @@
 from django import forms
 from medicalhub.models import MedicineType
+from medline.models import PrescribedMedicine
 
 
 class MedicineTypeForm(forms.ModelForm):
@@ -15,3 +16,9 @@ class MedicineTypeForm(forms.ModelForm):
         }
 
     field_order = ['name', 'description', 'code', 'image']
+
+
+class PrescriptionForm(forms.ModelForm):
+    class Meta:
+        model = PrescribedMedicine
+        fields = ['medicine', 'schedule', 'consult']

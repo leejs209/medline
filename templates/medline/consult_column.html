@@ -7,8 +7,7 @@
                     <div class="box">
                         <div class="container">
                             <h2 class="title is-size-4">{{ x.title }}</h2>
-                            <h2 class="subtitle has-text-grey-dark is-size-5">{{ x.reserve_date |date:"n월 j일" }} {{ x.reserve_time }}</h2>
-                            <h2 class="subtitle has-text-grey-dark is-size-6">{{ x.added_datetime|date:"n월 j일 등록" }}</h2>
+                            <h2 class="subtitle has-text-grey-dark is-size-5">{{ x.reserve_date |date:"n월 j일" }} {{ x.reserve_time }}</br>{{ x.added_datetime|date:"n월 j일 등록" }}</h2>
                         </div>
                         <figure class="image">
                             <img src="{{ x.image.url }}">

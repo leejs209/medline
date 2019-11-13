@@ -17,5 +17,5 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(medline.consult)
-admin.site.register(medline.Prescription)
+admin.site.register(medline.PrescribedMedicine)
 admin.site.register(medicalhub.MedicineType)

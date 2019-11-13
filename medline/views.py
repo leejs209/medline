@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import consult
 from .forms import ConsultForm
 from django.contrib import messages
+from django.db.models import F
 from django.urls import reverse
 import datetime
 from django.utils import timezone
@@ -26,7 +27,7 @@ def consultform(request):
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
         return redirect('login')
-    return render(request, 'medline/consultform.html', {'userid': userid, 'title': name, 'form': form})
+    return render(request, 'medline/consultform.html', {'title': name, 'form': form})
 
 
 def finished_consult(request):
@@ -43,12 +44,11 @@ def finished_consult(request):
 def pending_consult(request):
     name = '상담내역'
     userid = request.user.id
-    consulthistory = consult.objects.filter(user=userid, reserve_date__gte=timezone.now(),
-                                            is_finished=False)
+    history = consult.objects.filter(user=userid, reserve_date__gte=timezone.now(), is_finished=False)
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
         return redirect('login')
-    return render(request, 'medline/pending_consult.html', {'userid': userid, 'title': name, 'history': consulthistory})
+    return render(request, 'medline/pending_consult.html', {'userid': userid, 'title': name, 'history': history})
 
 
 def expired_consult(request):
@@ -68,12 +68,15 @@ def get_consultform(request):
         if form.is_valid():
             # add to the `consult` model
             added_consult = form.save(commit=False)
-            added_consult.user = request.user
-            added_consult.image = form.cleaned_data['image']
-            added_consult.save()
-            messages.success(request, '상담이 신청되었습니다')
-            consult_details = consult.objects.get(pk=added_consult.pk)
-            return redirect('/consult/details/%s' % consult_details.pk)
+            now = timezone.now().date()
+            if added_consult.reserve_date >= now:
+                added_consult.user = request.user
+                added_consult.image = form.cleaned_data['image']
+                added_consult.save()
+                messages.success(request, '상담이 신청되었습니다')
+                consult_details = consult.objects.get(pk=added_consult.pk)
+                return redirect('/consult/details/%s' % consult_details.pk)
+            messages.error(request, "미래로는 상담을 신청할 수 없습니다!")
         else:
             messages.error(request, "잘못된 입력입니다")
     else:
@@ -82,10 +85,7 @@ def get_consultform(request):
 
 
 def details(request, pk):
-    try:
-        chosen_consult = consult.objects.get(pk=pk)
-    except:
-        raise Http404('<h1>존재하지 않는 상담입니다</h1>')
+    chosen_consult = get_object_or_404(consult, pk=pk)
     if chosen_consult.user == request.user:
         return render(request, 'medline/details.html', {'consult': chosen_consult})
     messages.error(request, "상담을 신청하신 분이 아니므로 접근이 거부됩니다.")
@@ -95,12 +95,11 @@ def details(request, pk):
 def delete_consult(request, pk):
     chosen_consult = consult.objects.get(pk=pk)
     if request.method == "POST":
-        if (chosen_consult.user == request.user or request.user.is_superuser):
+        if (chosen_consult.user == request.user and not chosen_consult.is_finished) or request.user.is_superuser:
             chosen_consult.delete()
             return redirect('operation_complete')
-            # todo: redirect to original page (user or admin page, depending on user.is_superuser)
         else:
-            messages.error(request, "상담을 신청하신 분이나 관리자가 아니므로 접근이 거부됩니다.")
+            messages.error(request, "권한이 없습니다.")
     else:
         messages.error(request, "잘못 들어오셨어요")
     return redirect('home')
@@ -110,13 +109,9 @@ def operation_complete(request):
     return render(request, 'medline/operation_complete.html')
 
 
-def edit_consult(request, pk):
-    pass
-
-
 def finish_consult(request, pk):
     if request.method == "POST":
-        if (request.user.is_superuser):
+        if request.user.is_superuser:
             consult.objects.filter(pk=pk).update(is_finished=True)
             return redirect('/medicalhub/details/%s' % pk)
         else:
@@ -125,7 +120,8 @@ def finish_consult(request, pk):
         messages.error(request, "잘못 들어오셨어요")
     return redirect('home')
 
-def undo_finish_consult(request,pk):
+
+def undo_finish_consult(request, pk):
     if request.method == "POST":
         if (request.user.is_superuser):
             consult.objects.filter(pk=pk).update(is_finished=False)
@@ -135,3 +131,12 @@ def undo_finish_consult(request,pk):
     else:
         messages.error(request, "잘못 들어오셨어요")
     return redirect('home')
+
+# make a custom edit page if enough time
+#def edit_consult(request, pk):
+#    instance = get_object_or_404(consult, pk=pk)
+#    form = ConsultForm(request.POST, instance=instance)
+#    if form.is_valid():
+#        form.save()
+#        return redirect('')
+#    return render(request, 'medline/consultform.html', {'form': form})

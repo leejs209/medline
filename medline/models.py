@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from multiselectfield import MultiSelectField
-
+import datetime
 import users.models as users
 import medicalhub.models as medicalhub
 
@@ -51,7 +51,7 @@ class consult(models.Model):
 
     # def update(self):
     # logic to update the status only for objects that need to have its `status` updated
-    def __str___(self):
+    def __str__(self):
         return self.title
 
     @property
@@ -60,11 +60,6 @@ class consult(models.Model):
         if len(self.message) <= limit:
             return self.message
         return self.message[0:limit] + '...'
-
-
-class Prescription(models.Model):
-    user = models.ForeignKey(users.CustomUser, on_delete=models.CASCADE)
-    consult = models.ForeignKey(consult, on_delete=models.CASCADE, null=True, blank=True)
 
 
 class PrescribedMedicine(models.Model):
@@ -76,4 +71,4 @@ class PrescribedMedicine(models.Model):
 
     medicine = models.ForeignKey(medicalhub.MedicineType, on_delete=models.CASCADE)
     schedule = MultiSelectField(choices=schedule_choices, blank=True, max_length=300)
-    prescription = models.ForeignKey(Prescription, on_delete=models.CASCADE)
+    consult = models.ForeignKey(consult, on_delete=models.CASCADE, null=True, blank=True)

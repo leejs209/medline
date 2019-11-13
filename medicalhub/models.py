@@ -11,6 +11,9 @@ class MedicineType(models.Model):
     description = models.TextField(blank=True, default="")
     code = models.CharField(max_length=10, blank=False)  # max_length is arbitrary; find out what is proper
 
+    def __str__(self):
+        return self.name
+
     @property
     def shortened_description(self):
         limit = 30
