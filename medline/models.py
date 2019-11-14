@@ -69,6 +69,7 @@ class PrescribedMedicine(models.Model):
         ('dinner', '저녁'),
     ]
 
+    number_of_pills = models.SmallIntegerField(default=0)
     medicine = models.ForeignKey(medicalhub.MedicineType, on_delete=models.CASCADE)
     schedule = MultiSelectField(choices=schedule_choices, blank=True, max_length=300)
     consult = models.ForeignKey(consult, on_delete=models.CASCADE, null=True, blank=True)

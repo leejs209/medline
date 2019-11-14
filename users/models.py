@@ -3,10 +3,9 @@ from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
     grade_choices = [
-        ('h1', '고1'),
-        ('h2', '고2'),
-        ('h3', '고3'),
-        ('t', '선생님')
+        ('1', '고1'),
+        ('2', '고2'),
+        ('3', '고3'),
     ]
 
     division_choices = [
@@ -27,7 +26,7 @@ class CustomUser(AbstractUser):
     ]
     name = models.CharField(max_length=30, blank=False, default='')
     barcode = models.CharField(max_length=50)
-    grade = models.CharField(max_length=2, choices=grade_choices, blank=False, default='h1')
+    grade = models.CharField(max_length=2, choices=grade_choices, blank=False, default='1')
     division = models.CharField(max_length=2, choices=division_choices, blank=False, default='1')
     studentno = models.SmallIntegerField(default=1)
 

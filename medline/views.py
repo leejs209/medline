@@ -76,7 +76,7 @@ def get_consultform(request):
                 messages.success(request, '상담이 신청되었습니다')
                 consult_details = consult.objects.get(pk=added_consult.pk)
                 return redirect('/consult/details/%s' % consult_details.pk)
-            messages.error(request, "미래로는 상담을 신청할 수 없습니다!")
+            messages.error(request, "과거로는 상담을 신청할 수 없습니다!")
         else:
             messages.error(request, "잘못된 입력입니다")
     else:

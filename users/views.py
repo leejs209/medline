@@ -6,10 +6,6 @@ from django.contrib import messages
 
 def signup(request):
     name = '회원가입'
-    user = request.user
-    if user is not None:
-        return redirect('home')
-
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():

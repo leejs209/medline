@@ -31,7 +31,7 @@
                         <div class="container">
                             <h2 class="title is-size-4">{% if x.is_finished %}[완료] {% endif %}{{ x.title }}</h2>
                             <h2 class="subtitle has-text-grey-dark is-size-5">{{ x.reserve_date |date:"Y년 n월 j일" }} {{ x.reserve_time }}</h2>
-                            <p class="content">{{ x.user.username }}님</br>{{ x.added_datetime|date:"Y년 n월 j일 등록" }}</p>
+                            <p>{{ x.user.username }}님</br>{{ x.added_datetime|date:"Y년 n월 j일 등록" }}</p>
                         </div>
                         <figure class="image">
                             <img src="{{ x.image.url }}">

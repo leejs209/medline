@@ -4,7 +4,7 @@
 {% block body %}
 <section class="section has-background-white-bis">
     <h1 class="title ">{{ title }}</h1>
-    <h2 class="subtitle">처방하실 약요과 처방 기을 정해주세간요</h2>
+    <h2 class="subtitle">처방하실 약과 처방 기간을 정해주세요</h2>
     <form method="post" action="{% url 'get_prescription_form' %}">
         {% csrf_token %}
         {{ form|bulma }}

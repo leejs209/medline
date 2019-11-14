@@ -18,7 +18,7 @@
             </div>
             <div class="column">
                 <div class="box">
-                    <p class="content">{{ medicine_type.description }}</p>
+                    <p>{{ medicine_type.description|linebreaks }}</p>
                 </div>
                 <div class="buttons">
                     <a class="button is-success" onclick="window.open('http://{{ request.get_host }}/admin/medicalhub/medicinetype/{{ medicine_type.pk }}','popup','width=600,height=600'); return false;">편집</a>

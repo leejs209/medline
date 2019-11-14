@@ -4,7 +4,7 @@
 {% block body %}
 <section class="section has-background-white-bis">
     <h1 class="title ">{{ title }}</h1>
-    <h2 class="subtitle">약 정보를 입력해주세요</h2>
+    <h2 class="subtitle">약 정보를 입력해주세요</br><a href="http://www.kmle.co.kr/search.php?Search=&Druginfo=YES" target="_blank">약 정보 검색</a></h2>
     <form method="post" action="{% url 'get_medicine_type_form' %}">
         {% csrf_token %}
         {{ form|bulma }}
