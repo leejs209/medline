@@ -28,4 +28,4 @@ class PrescriptionForm(forms.ModelForm):
             'number_of_pills': '복용할 약의 개수',
             'consult': '처방할 상담의 제목',
         }
-    field_order = ['medicine', 'schedule', 'number_of_pills']
+    field_order = ['medicine', 'schedule', 'number_of_pills', 'consult']

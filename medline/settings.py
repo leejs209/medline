@@ -24,7 +24,7 @@ SECRET_KEY = '_fqy2e7@ad=vgh)wy3@jy4gnv6psd)knyv1$53$&rpy@efbr85'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['daeryun.duckdns.org', '127.0.0.1']
 
 # Application definition
 
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'multiselectfield',
     'bulma',
     'pwa',
+    'fcm_django',
 ]
 
 MIDDLEWARE = [
@@ -142,3 +143,16 @@ PWA_APP_ORIENTATION = 'any'
 PWA_APP_START_URL = '/'
 PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'ko-KR'
+
+FCM_DJANGO_SETTINGS = {
+    "APP_VERBOSE_NAME": "[string for AppConfig's verbose_name]",
+    # default: _('FCM Django')
+    "FCM_SERVER_KEY": "AAAAjQ5wUjg:APA91bFT0pS3_LI4OZTVhr7ObVEZe8Q0BFE7Ft6unH3PFNIGTx9gckfB9NLk4d5hyqKPH5hdSujnOvM5sRU0p6mBy2HqbH7DjTb-4Il_l4eiweEE9SnkUsNOM01QXWRL2_f9x1yq5bXX",
+    # true if you want to have only one active device per registered user at a time
+    # default: False
+    "ONE_DEVICE_PER_USER": False,
+    # devices to which notifications cannot be sent,
+    # are deleted upon receiving error response from FCM
+    # default: False
+    "DELETE_INACTIVE_DEVICES": False,
+}

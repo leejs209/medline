@@ -7,7 +7,7 @@ from django.urls import reverse
 import datetime
 from django.utils import timezone
 from django.http import HttpResponse, Http404
-
+from fcm_django.models import FCMDevice
 
 def home(request):
     name = '홈'
@@ -34,6 +34,10 @@ def finished_consult(request):
     name = '상담내역'
     userid = request.user.id
     consulthistory = consult.objects.filter(user=userid, is_finished=True)
+
+    device = FCMDevice.objects.first()
+    device.send_message("Title", "Message")
+
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
         return redirect('login')
@@ -118,6 +122,7 @@ def finish_consult(request, pk):
             messages.error(request, "관리자가 아니므로 접근이 거부됩니다.")
     else:
         messages.error(request, "잘못 들어오셨어요")
+
     return redirect('home')
 
 
