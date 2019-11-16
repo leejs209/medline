@@ -1,0 +1,69 @@
+{% extends 'medicalhub/base.html' %}
+
+
+{% block body %}
+<section class="section has-background-white-bis">
+    <h1 class="title ">{{ title }}</h1>
+
+    {% if messages %}
+    <ul class="message">
+        {% for message in messages %}
+        <article class="message is-warning">
+          <div class="message-header">
+            <p>알림</p>
+          </div>
+          <div class="message-body">
+            {{ message }}
+          </div>
+        </article>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+
+    <div class="field has-addons">
+        <div class="control">
+            <input class="input" placeholder="아이디로 검색하세요" id="username_search_field">
+        </div>
+        <div class="control">
+            <button onclick="location.href = '/medicalhub/search-by-username/' + document.getElementById('username_search_field').value;" class="float-right button submit-button" >검색</button>
+        </div>
+    </div>
+
+    {% if no_matching_user %}
+    <div class="hero-body has-text-centered">
+        <h2 class="subtitle">검색하신 사용자가 존재하지 않습니다.</h2>
+    </div>
+    {% else %}
+
+        <div class="columns is-multiline">
+        {% if history.count != 0 %}
+        {% load static %}
+            {% for x in history %}
+                <div class="column is-one-quarter">
+                    <a href="/medicalhub/details/{{ x.pk }}">
+                        <div class="box">
+                            <div class="container">
+                                <h2 class="title is-size-4">{% if x.is_finished %}[완료] {% endif %}{{ x.title }}</h2>
+                                <h2 class="subtitle has-text-grey-dark is-size-5">{{ x.reserve_date |date:"Y년 n월 j일" }} {{ x.reserve_time }}</h2>
+                                <p>{{ x.user.username }}님</br>{{ x.added_datetime|date:"Y년 n월 j일 등록" }}</p>
+                            </div>
+                            <figure class="image">
+                                <img src="{{ x.image.url }}">
+                            </figure>
+                            <p class="content">{{ x.shortened_message }}</p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="hero-body has-text-centered">
+                <h2 class="subtitle">사용자는 존재하지만 상담한 기록이 없습니다.</h2>
+            </div>
+        {% endif %}
+        </div>
+    {% endif %}
+
+
+</section>
+{% endblock %}

@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'multiselectfield',
     'bulma',
     'pwa',
-    'fcm_django',
+    'webpush',
 ]
 
 MIDDLEWARE = [
@@ -144,15 +144,8 @@ PWA_APP_START_URL = '/'
 PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'ko-KR'
 
-FCM_DJANGO_SETTINGS = {
-    "APP_VERBOSE_NAME": "[string for AppConfig's verbose_name]",
-    # default: _('FCM Django')
-    "FCM_SERVER_KEY": "AAAAjQ5wUjg:APA91bFT0pS3_LI4OZTVhr7ObVEZe8Q0BFE7Ft6unH3PFNIGTx9gckfB9NLk4d5hyqKPH5hdSujnOvM5sRU0p6mBy2HqbH7DjTb-4Il_l4eiweEE9SnkUsNOM01QXWRL2_f9x1yq5bXX",
-    # true if you want to have only one active device per registered user at a time
-    # default: False
-    "ONE_DEVICE_PER_USER": False,
-    # devices to which notifications cannot be sent,
-    # are deleted upon receiving error response from FCM
-    # default: False
-    "DELETE_INACTIVE_DEVICES": False,
+WEBPUSH_SETTINGS = {
+   "VAPID_PUBLIC_KEY": "BNBK_Kg_J4KMoch51fyp3VK2G5xuXJkvdeGs6s0W_9Ic0P8hcnCkDdvlRx4WsTlPFWEuYfN7a15r5hNe1aem3EM",
+   "VAPID_PRIVATE_KEY": "gVQbQwm9BqJjQW_H8nMUm74NQCPF_pG2BfMo_4RUK9A",
+   "VAPID_ADMIN_EMAIL": "leejs209209@gmail.com"
 }

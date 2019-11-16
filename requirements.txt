@@ -3,4 +3,4 @@ django-multiselectfield
 Pillow
 django-bulma
 django-pwa
-fcm-django
+django-webpush

@@ -33,7 +33,7 @@ urlpatterns = [
     path('consult/history/finished', medline.finished_consult, name='finished_consult'),
     path('consult/history/pending', medline.pending_consult, name='pending_consult'),
     path('consult/form/submit', medline.get_consultform, name='get_consultform'),
-    path('consult/history/expired', medline.expired_consult, name='expired_consult'),
+    path('consult/history/ongoing', medline.ongoing_consult, name='ongoing_consult'),
     path('medicalhub', medicalhub.home, name='medicalhub_home'),
     path('medicalhub/details/<int:pk>', medicalhub.details, name='details'),
     path('medicalhub/medicine-type-form', medicalhub.medicine_type_form, name='medicine_type_form'),
@@ -48,6 +48,7 @@ urlpatterns = [
     path('consult/operation_complete', medline.operation_complete, name='operation_complete'),
     path('medicalhub/prescription/form/<int:consult_pk>', medicalhub.prescription_form, name='prescription_form'),
     path('medicalhub/prescription/form/submit', medicalhub.get_prescription_form, name='get_prescription_form'),
+    path('medicalhub/search-by-username/<str:username>', medicalhub.search_by_username, name='search_by_username'),
     path('', include('pwa.urls')),
 ]
 

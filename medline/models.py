@@ -5,7 +5,6 @@ import datetime
 import users.models as users
 import medicalhub.models as medicalhub
 
-
 class consult(models.Model):
     symptoms_choices = [
         ('a1', '복통'),
@@ -13,12 +12,6 @@ class consult(models.Model):
         ('a3', '두통'),
         ('a4', '어지로움'),
         # go on...
-    ]
-
-    status_choices = [
-        ('wait', '상담 예정'),
-        ('done', '상담 완료'),
-        ('expire', '기간 만료')
     ]
 
     reservetime_choices = [
@@ -29,7 +22,7 @@ class consult(models.Model):
         ('a4', '4교시 후'),
         ('a5', '5교시 후'),
         ('lu', '점심시간'),
-        ('a6', '6교시 후'),
+       ('a6', '6교시 후'),
         ('a7', '7교시 후'),
         # etc...
     ]
@@ -70,6 +63,7 @@ class PrescribedMedicine(models.Model):
     ]
 
     number_of_pills = models.SmallIntegerField(default=0)
+    #todo: 약 몇개인지 details에서 보여주기
     medicine = models.ForeignKey(medicalhub.MedicineType, on_delete=models.CASCADE)
     schedule = MultiSelectField(choices=schedule_choices, blank=True, max_length=300)
     consult = models.ForeignKey(consult, on_delete=models.CASCADE, null=True, blank=True)

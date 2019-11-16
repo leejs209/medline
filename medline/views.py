@@ -7,7 +7,14 @@ from django.urls import reverse
 import datetime
 from django.utils import timezone
 from django.http import HttpResponse, Http404
-from fcm_django.models import FCMDevice
+
+from django.http.response import JsonResponse, HttpResponse
+from django.views.decorators.http import require_GET, require_POST
+from django.shortcuts import get_object_or_404
+from users.models import CustomUser as User
+from django.views.decorators.csrf import csrf_exempt
+from webpush import send_user_notification
+import json
 
 def home(request):
     name = '홈'
@@ -34,10 +41,6 @@ def finished_consult(request):
     name = '상담내역'
     userid = request.user.id
     consulthistory = consult.objects.filter(user=userid, is_finished=True)
-
-    device = FCMDevice.objects.first()
-    device.send_message("Title", "Message")
-
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
         return redirect('login')
@@ -48,22 +51,23 @@ def finished_consult(request):
 def pending_consult(request):
     name = '상담내역'
     userid = request.user.id
-    history = consult.objects.filter(user=userid, reserve_date__gte=timezone.now(), is_finished=False)
+    history = consult.objects.filter(user=userid, PrescribedMedicine_set__exist=False, is_finished=False)
+    # todo: figure out how to filter `history` based on wheter `PrescribedMEdicine` object exists that reference `consult`
+    # maybe --> prescription = PrescribedMedicine.objects.filter(consult__
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
         return redirect('login')
     return render(request, 'medline/pending_consult.html', {'userid': userid, 'title': name, 'history': history})
 
 
-def expired_consult(request):
+def ongoing_consult(request):
     name = '상담내역'
     userid = request.user.id
-    history = consult.objects.filter(user=userid, reserve_date__lt=timezone.now(),
-                                     is_finished=False)
+    history = consult.objects.filter(user=userid, prescription_exist=True, is_finished=False)
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
         return redirect('login')
-    return render(request, 'medline/expired_consult.html', {'userid': userid, 'title': name, 'history': history})
+    return render(request, 'medline/ongoing_consult.html', {'userid': userid, 'title': name, 'history': history})
 
 
 def get_consultform(request):

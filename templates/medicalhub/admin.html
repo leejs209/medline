@@ -20,6 +20,14 @@
       </ul>
     {% endif %}
 
+    <div class="field has-addons">
+        <div class="control">
+            <input class="input" placeholder="아이디로 검색하세요" id="username_search_field">
+        </div>
+        <div class="control">
+            <button onclick="location.href = 'medicalhub/search-by-username/' + document.getElementById('username_search_field').value;" class="float-right button submit-button" >검색</button>
+        </div>
+    </div>
 
     <div class="columns is-multiline">
     {% if history.count != 0 %}

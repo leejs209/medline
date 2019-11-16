@@ -4,11 +4,20 @@ from medicalhub.models import MedicineType
 from django.contrib import messages
 from django.http import HttpResponse
 from .forms import MedicineTypeForm, PrescriptionForm
-
+from users.models import CustomUser
+from django.core.exceptions import ObjectDoesNotExist
 
 def home(request):
-    name = '관리 패널'
-    consulthistory = consult.objects.all().order_by('reserve_date')
+    name = '예정된 상담'
+    consulthistory = consult.objects.filter(is_finished=False, prescription_exist=False).order_by('reserve_date')
+    if not request.user.is_superuser:
+        messages.error(request, "권한이 없습니다")
+        return redirect('home')
+    return render(request, 'medicalhub/admin.html', {'title': name, 'history': consulthistory})
+
+def home(request):
+    name = '진행 중인 상담'
+    consulthistory = consult.objects.filter(is_finished=False, prescription_exist=True).order_by('reserve_date')
     if not request.user.is_superuser:
         messages.error(request, "권한이 없습니다")
         return redirect('home')
@@ -101,3 +110,20 @@ def get_prescription_form(request):
     else:
         messages.error(request, "잘못 들어오셨어요")
     return redirect('home')
+
+def search_by_username(request, username):
+    name = username + ' 검색 결과'
+    no_matching_user = False
+    user = None
+
+    try:
+        user = CustomUser.objects.get(username=username)
+    except ObjectDoesNotExist:
+        no_matching_user = True
+    consulthistory = consult.objects.filter(user=user).order_by('reserve_date')
+
+
+    if not request.user.is_superuser:
+        messages.error(request, "권한이 없습니다")
+        return redirect('home')
+    return render(request, 'medicalhub/search-by-username.html', {'title': name, 'history': consulthistory, 'no_matching_user': no_matching_user})
