@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
-{% load webpush_notifications %}
 {% load pwa %}
 {% load static %}
 <head>
-    {% webpush_header %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -49,9 +47,6 @@
         </div>
         <div class="navbar-end">
             {% if user.is_authenticated %}
-                <a class="navbar-item" href="{% url 'notification' %}">
-                    알림 설정
-                </a>
                 <a class="navbar-item">
                     <b>{{ user.username }}</b>님
                 </a>

@@ -2,9 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import consult
 from .forms import ConsultForm
 from django.contrib import messages
-from django.db.models import F
-from django.urls import reverse
-import datetime
 from django.utils import timezone
 from django.http import HttpResponse, Http404
 
@@ -15,6 +12,7 @@ from users.models import CustomUser as User
 from django.views.decorators.csrf import csrf_exempt
 import json
 
+
 def home(request):
     name = '홈'
     return render(request, 'medline/home.html', {'title': name})
@@ -22,16 +20,11 @@ def home(request):
 
 def contact(request):
     name = '연락처'
-
     return render(request, 'medline/contact.html', {'title': name})
-
-def notification(request):
-    return render(request, 'medline/notification.html')
 
 
 def consultform(request):
     name = '상담신청'
-    userid = request.user.id
     form = ConsultForm()
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
@@ -42,34 +35,30 @@ def consultform(request):
 def finished_consult(request):
     name = '상담내역'
     userid = request.user.id
-    consulthistory = consult.objects.filter(user=userid, is_finished=True)
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
         return redirect('login')
-    return render(request, 'medline/finished_consult.html',
-                  {'userid': userid, 'title': name, 'history': consulthistory})
+    consulthistory = consult.objects.filter(user=request.user, is_finished=True)
+    return render(request, 'medline/finished_consult.html', {'userid': userid, 'title': name, 'history': consulthistory})
 
 
 def pending_consult(request):
     name = '상담내역'
     userid = request.user.id
-    history = consult.objects.filter(user=userid, PrescribedMedicine_set__isnull=False, is_finished=False)
-    # todo: figure out how to filter `history` based on wheter `PrescribedMEdicine` object exists that reference `consult`
-    # maybe --> prescription = PrescribedMedicine.objects.filter(consult__
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
         return redirect('login')
+    history = consult.objects.filter(user=request.user, is_finished=False, prescription_exists=False).order_by('reserve_date')
     return render(request, 'medline/pending_consult.html', {'userid': userid, 'title': name, 'history': history})
 
 
 def ongoing_consult(request):
     name = '상담내역'
-    userid = request.user.id
-    history = consult.objects.filter(user=userid, PrescribedMedicine_set__isnull=True, is_finished=False)
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
         return redirect('login')
-    return render(request, 'medline/ongoing_consult.html', {'userid': userid, 'title': name, 'history': history})
+    history = consult.objects.filter(user=request.user,is_finished=False, prescription_exists=True).order_by('reserve_date')
+    return render(request, 'medline/ongoing_consult.html', { 'title': name, 'history': history})
 
 
 def finish_consult(request, pk):
@@ -144,7 +133,7 @@ def undo_finish_consult(request, pk):
     return redirect('home')
 
 # make a custom edit page if enough time
-#def edit_consult(request, pk):
+# def edit_consult(request, pk):
 #    instance = get_object_or_404(consult, pk=pk)
 #    form = ConsultForm(request.POST, instance=instance)
 #    if form.is_valid():

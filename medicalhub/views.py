@@ -6,7 +6,6 @@ from django.http import HttpResponse
 from .forms import MedicineTypeForm, PrescriptionForm
 from users.models import CustomUser
 from django.core.exceptions import ObjectDoesNotExist
-from webpush import send_user_notification
 
 def home(request):
     name = '예정된 상담'
@@ -55,6 +54,9 @@ def medicine_type_form(request):
 
 def get_medicine_type_form(request):
     if request.method == "POST":
+        if not request.user.is_superuser:
+            messages.error(request, "권한이 없습니다")
+            return redirect('login')
         form = MedicineTypeForm(request.POST, request.FILES)
         if form.is_valid():
             # add to the `consult` model
@@ -111,6 +113,9 @@ def prescription_form(request, consult_pk):
 
 def get_prescription_form(request):
     if request.method == "POST":
+        if not request.user.is_superuser:
+            messages.error(request, "권한이 없습니다")
+            return redirect('login')
         form = PrescriptionForm(request.POST)
         if form.is_valid() and request.user.is_superuser:
             added_prescription = form.save()

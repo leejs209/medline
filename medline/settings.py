@@ -24,7 +24,7 @@ SECRET_KEY = '_fqy2e7@ad=vgh)wy3@jy4gnv6psd)knyv1$53$&rpy@efbr85'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['daeryun.duckdns.org', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'multiselectfield',
     'bulma',
     'pwa',
-    'webpush',
 ]
 
 MIDDLEWARE = [
@@ -143,9 +142,3 @@ PWA_APP_ORIENTATION = 'any'
 PWA_APP_START_URL = '/'
 PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'ko-KR'
-
-WEBPUSH_SETTINGS = {
-   "VAPID_PUBLIC_KEY": "BNBK_Kg_J4KMoch51fyp3VK2G5xuXJkvdeGs6s0W_9Ic0P8hcnCkDdvlRx4WsTlPFWEuYfN7a15r5hNe1aem3EM",
-   "VAPID_PRIVATE_KEY": "gVQbQwm9BqJjQW_H8nMUm74NQCPF_pG2BfMo_4RUK9A",
-   "VAPID_ADMIN_EMAIL": "leejs209209@gmail.com"
-}

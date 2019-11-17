@@ -25,7 +25,7 @@ class CustomUser(AbstractUser):
         ('14', '14반'),
     ]
     name = models.CharField(max_length=30, blank=False, default='')
-    barcode = models.CharField(max_length=50)
+    birthday = models.DateField(blank=False, help_text="1900-11-11 형태로 입력하세요", default="1900-1-1")
     grade = models.CharField(max_length=2, choices=grade_choices, blank=False, default='1')
     division = models.CharField(max_length=2, choices=division_choices, blank=False, default='1')
     studentno = models.SmallIntegerField(default=1)

@@ -2,5 +2,4 @@ django
 django-multiselectfield
 django-bulma
 django-pwa
-django-webpush
 Pillow

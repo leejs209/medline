@@ -14,15 +14,15 @@ class consult(models.Model):
         # go on...
     ]
     reservetime_choices = [
-        ('bf', '아침시간'),
-        ('a1', '1교시 후'),  # after 1, 2, ...
-        ('a2', '2교시 후'),
-        ('a3', '3교시 후'),
-        ('a4', '4교시 후'),
-        ('a5', '5교시 후'),
-        ('lu', '점심시간'),
-       ('a6', '6교시 후'),
-        ('a7', '7교시 후'),
+        ('아침시간', '아침시간'),
+        ('1교시 후', '1교시 후'),  # after 1, 2, ...
+        ('2교시 후', '2교시 후'),
+        ('3교시 후', '3교시 후'),
+        ('4교시 후', '4교시 후'),
+        ('5교시 후', '5교시 후'),
+        ('점심시간', '점심시간'),
+        ('6교시 후', '6교시 후'),
+        ('7교시 후', '7교시 후'),
         # etc...
     ]
 
@@ -31,7 +31,7 @@ class consult(models.Model):
     message = models.TextField(blank=False)
     added_datetime = models.DateTimeField(auto_now_add=True, blank=False)
     reserve_date = models.DateField(blank=False, default=timezone.now)
-    reserve_time = models.CharField(blank=False, choices=reservetime_choices, default='a1', max_length=2)
+    reserve_time = models.CharField(blank=False, choices=reservetime_choices, default='1교시 후', max_length=15)
 
     image = models.ImageField(upload_to="consult_image", blank=True, default="consult_image/notfound.png")
     symptoms = MultiSelectField(choices=symptoms_choices, blank=True, max_length=300)
