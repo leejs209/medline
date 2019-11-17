@@ -1,0 +1,14 @@
+{% extends 'medline/base.html' %}
+
+{% block body %}
+<section class="section has-background-white-bis">
+    <h1 class="title ">약 알림 받기</h1>
+    {% load webpush_notifications %}
+    <div class="container">
+        <p>약 복용 알림 받기</p>
+        <div class="buttons is-center">
+            {% webpush_button %}
+        </div>
+    </div>
+</section>
+{% endblock %}

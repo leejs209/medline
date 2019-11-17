@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from .forms import MedicineTypeForm, PrescriptionForm
 from users.models import CustomUser
 from django.core.exceptions import ObjectDoesNotExist
+from webpush import send_user_notification
 
 def home(request):
     name = '예정된 상담'

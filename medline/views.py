@@ -25,6 +25,9 @@ def contact(request):
 
     return render(request, 'medline/contact.html', {'title': name})
 
+def notification(request):
+    return render(request, 'medline/notification.html')
+
 
 def consultform(request):
     name = '상담신청'

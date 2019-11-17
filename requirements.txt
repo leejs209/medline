@@ -2,5 +2,5 @@ django
 django-multiselectfield
 django-bulma
 django-pwa
-coolsms-python-sdk
+django-webpush
 Pillow

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'multiselectfield',
     'bulma',
     'pwa',
+    'webpush',
 ]
 
 MIDDLEWARE = [
@@ -142,3 +143,9 @@ PWA_APP_ORIENTATION = 'any'
 PWA_APP_START_URL = '/'
 PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'ko-KR'
+
+WEBPUSH_SETTINGS = {
+   "VAPID_PUBLIC_KEY": "BNBK_Kg_J4KMoch51fyp3VK2G5xuXJkvdeGs6s0W_9Ic0P8hcnCkDdvlRx4WsTlPFWEuYfN7a15r5hNe1aem3EM",
+   "VAPID_PRIVATE_KEY": "gVQbQwm9BqJjQW_H8nMUm74NQCPF_pG2BfMo_4RUK9A",
+   "VAPID_ADMIN_EMAIL": "leejs209209@gmail.com"
+}

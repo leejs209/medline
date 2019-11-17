@@ -3,29 +3,11 @@ from celery import shared_task
 import medline.models as medline
 from users.models import CustomUser
 from django.core.exceptions import ObjectDoesNotExist
-from sdk.api.message import Message
-from sdk.exceptions import CoolsmsException
+from webpush import send_user_notification
 
-def send_sms(phone, message):
-    api_key = "#ENTER_YOUR_OWN#"
-    api_secret = "#ENTER_YOUR_OWN#"
-    print("Sending SMS...")
-    ## 4 params(to, from, type, text) are mandatory. must be filled
-    params = dict()
-    params['type'] = 'sms' # Message type ( sms, lms, mms, ata )
-    params['to'] = phone # Recipients Number '01000000000,01000000001'
-    params['from'] = '01083311390' # Sender number
-    params['text'] = message # Message
+payload = {"head": "Welcome!", "body": "Hello World"}
 
-    cool = Message(api_key, api_secret)
-    try:
-        response = cool.send(params)
-        if "error_list" in response:
-            print("Error List : %s" % response['error_list'])
-
-    except CoolsmsException as e:
-        print("Error Code : %s" % e.code)
-        print("Error Message : %s" % e.msg)
+send_user_notification(user=user, payload=payload, ttl=1000)
 
 @shared_task
 def morning_notification():

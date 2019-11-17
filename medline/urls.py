@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', medline.home, name='home'),
     path('contact', medline.contact, name='contact'),
+    path('notification', medline.notification, name='notification'),
     path('consult/form', medline.consultform, name='consultform'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('signup/', users.signup, name='signup'),
@@ -52,6 +53,7 @@ urlpatterns = [
     path('medicalhub/prescription/form/submit', medicalhub.get_prescription_form, name='get_prescription_form'),
     path('medicalhub/search-by-username/<str:username>', medicalhub.search_by_username, name='search_by_username'),
     path('', include('pwa.urls')),
+    path('webpush/', include('webpush.urls'))
 ]
 
 urlpatterns += staticfiles_urlpatterns()
