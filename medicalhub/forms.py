@@ -6,16 +6,14 @@ from medline.models import PrescribedMedicine
 class MedicineTypeForm(forms.ModelForm):
     class Meta:
         model = MedicineType
-        fields = ['name', 'description', 'code', 'image']
+        fields = ['name', 'description', 'code']
         labels = {
             'name': '이름',
             'description': '설명',
             'code': '약 코드',
-            'image': '사진'
-
         }
 
-    field_order = ['name', 'description', 'code', 'image']
+    field_order = ['name', 'description', 'code']
 
 
 class PrescriptionForm(forms.ModelForm):

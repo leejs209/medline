@@ -57,12 +57,10 @@ def get_medicine_type_form(request):
         if not request.user.is_superuser:
             messages.error(request, "권한이 없습니다")
             return redirect('login')
-        form = MedicineTypeForm(request.POST, request.FILES)
+        form = MedicineTypeForm(request.POST)
         if form.is_valid():
             # add to the `consult` model
-            added_medicinetype = form.save(commit=False)
-            added_medicinetype.image = form.cleaned_data['image']
-            added_medicinetype.save()
+            added_medicinetype = form.save()
             added_medicinetype_queryset = MedicineType.objects.get(pk=added_medicinetype.pk)
             return redirect('/medicalhub/medicine-type-details/%s' % added_medicinetype_queryset.pk)
         else:

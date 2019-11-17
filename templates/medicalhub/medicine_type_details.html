@@ -12,13 +12,8 @@
         <h2 class="title is-size-4">{{ medicine_type.name }}</h2>
         <div class="columns">
             <div class="column">
-                <figure class="image">
-                    <img src="{{ medicine_type.image.url }}">
-                </figure>
-            </div>
-            <div class="column">
                 <div class="box">
-                    <p>{{ medicine_type.description|linebreaks }}</p>
+                    <p>{{ medicine_type.shortened_description|linebreaks }}</p>
                 </div>
                 <div class="buttons">
                     <a class="button is-success" onclick="window.open('http://{{ request.get_host }}/admin/medicalhub/medicinetype/{{ medicine_type.pk }}','popup','width=600,height=600'); return false;">편집</a>
