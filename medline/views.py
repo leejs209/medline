@@ -13,7 +13,6 @@ from django.views.decorators.http import require_GET, require_POST
 from django.shortcuts import get_object_or_404
 from users.models import CustomUser as User
 from django.views.decorators.csrf import csrf_exempt
-from webpush import send_user_notification
 import json
 
 def home(request):
@@ -51,7 +50,7 @@ def finished_consult(request):
 def pending_consult(request):
     name = '상담내역'
     userid = request.user.id
-    history = consult.objects.filter(user=userid, PrescribedMedicine_set__exist=False, is_finished=False)
+    history = consult.objects.filter(user=userid, PrescribedMedicine_set__isnull=False, is_finished=False)
     # todo: figure out how to filter `history` based on wheter `PrescribedMEdicine` object exists that reference `consult`
     # maybe --> prescription = PrescribedMedicine.objects.filter(consult__
     if not request.user.is_authenticated:
@@ -63,11 +62,24 @@ def pending_consult(request):
 def ongoing_consult(request):
     name = '상담내역'
     userid = request.user.id
-    history = consult.objects.filter(user=userid, prescription_exist=True, is_finished=False)
+    history = consult.objects.filter(user=userid, PrescribedMedicine_set__isnull=True, is_finished=False)
     if not request.user.is_authenticated:
         messages.error(request, "로그인이 필요합니다.")
         return redirect('login')
     return render(request, 'medline/ongoing_consult.html', {'userid': userid, 'title': name, 'history': history})
+
+
+def finish_consult(request, pk):
+    if request.method == "POST":
+        if request.user.is_superuser:
+            consult.objects.filter(pk=pk).update(is_finished=True)
+            return redirect('/medicalhub/details/%s' % pk)
+        else:
+            messages.error(request, "관리자가 아니므로 접근이 거부됩니다.")
+    else:
+        messages.error(request, "잘못 들어오셨어요")
+
+    return redirect('home')
 
 
 def get_consultform(request):
@@ -115,19 +127,6 @@ def delete_consult(request, pk):
 
 def operation_complete(request):
     return render(request, 'medline/operation_complete.html')
-
-
-def finish_consult(request, pk):
-    if request.method == "POST":
-        if request.user.is_superuser:
-            consult.objects.filter(pk=pk).update(is_finished=True)
-            return redirect('/medicalhub/details/%s' % pk)
-        else:
-            messages.error(request, "관리자가 아니므로 접근이 거부됩니다.")
-    else:
-        messages.error(request, "잘못 들어오셨어요")
-
-    return redirect('home')
 
 
 def undo_finish_consult(request, pk):

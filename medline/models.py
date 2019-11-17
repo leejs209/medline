@@ -13,7 +13,6 @@ class consult(models.Model):
         ('a4', '어지로움'),
         # go on...
     ]
-
     reservetime_choices = [
         ('bf', '아침시간'),
         ('a1', '1교시 후'),  # after 1, 2, ...
@@ -27,23 +26,18 @@ class consult(models.Model):
         # etc...
     ]
 
-    # CASCADE means that all of an user's consulting history will be deleted upon deletion of the user
     user = models.ForeignKey(users.CustomUser, on_delete=models.CASCADE)
-
     title = models.CharField(max_length=50, default='', blank=False)
     message = models.TextField(blank=False)
     added_datetime = models.DateTimeField(auto_now_add=True, blank=False)
     reserve_date = models.DateField(blank=False, default=timezone.now)
     reserve_time = models.CharField(blank=False, choices=reservetime_choices, default='a1', max_length=2)
 
-    # status = models.CharField(max_length=5, choices=status_choices)
-
     image = models.ImageField(upload_to="consult_image", blank=True, default="consult_image/notfound.png")
     symptoms = MultiSelectField(choices=symptoms_choices, blank=True, max_length=300)
     is_finished = models.BooleanField(default=False)
+    prescription_exists = models.BooleanField(default=False)
 
-    # def update(self):
-    # logic to update the status only for objects that need to have its `status` updated
     def __str__(self):
         return self.title
 

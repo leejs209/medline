@@ -1,6 +1,6 @@
 django
 django-multiselectfield
-Pillow
 django-bulma
 django-pwa
-django-webpush
+coolsms-python-sdk
+Pillow

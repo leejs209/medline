@@ -9,20 +9,30 @@ from django.core.exceptions import ObjectDoesNotExist
 
 def home(request):
     name = '예정된 상담'
-    consulthistory = consult.objects.filter(is_finished=False, prescription_exist=False).order_by('reserve_date')
+    tab='pending'
     if not request.user.is_superuser:
         messages.error(request, "권한이 없습니다")
         return redirect('home')
-    return render(request, 'medicalhub/admin.html', {'title': name, 'history': consulthistory})
+    consulthistory = consult.objects.filter(is_finished=False, prescription_exists=False).order_by('reserve_date')
+    return render(request, 'medicalhub/consult.html', {'title': name, 'history': consulthistory, 'tab': tab})
 
-def home(request):
+def ongoing(request):
     name = '진행 중인 상담'
-    consulthistory = consult.objects.filter(is_finished=False, prescription_exist=True).order_by('reserve_date')
+    tab='ongoing'
     if not request.user.is_superuser:
         messages.error(request, "권한이 없습니다")
         return redirect('home')
-    return render(request, 'medicalhub/admin.html', {'title': name, 'history': consulthistory})
+    consulthistory = consult.objects.filter(is_finished=False, prescription_exists=True).order_by('reserve_date')
+    return render(request, 'medicalhub/consult.html', {'title': name, 'history': consulthistory, 'tab': tab})
 
+def finished(request):
+    name = '완료된 상담'
+    tab='finished'
+    if not request.user.is_superuser:
+        messages.error(request, "권한이 없습니다")
+        return redirect('home')
+    consulthistory = consult.objects.filter(is_finished=True).order_by('reserve_date')
+    return render(request, 'medicalhub/consult.html', {'title': name, 'history': consulthistory, 'tab': tab})
 
 def details(request, pk):
     chosen_consult = consult.objects.get(pk=pk)
@@ -104,6 +114,7 @@ def get_prescription_form(request):
         if form.is_valid() and request.user.is_superuser:
             added_prescription = form.save()
             prescription_object = PrescribedMedicine.objects.get(pk=added_prescription.pk)
+            consult.objects.filter(pk=prescription_object.consult.pk).update(prescription_exists=True)
             return redirect('/medicalhub/details/%s' % prescription_object.consult.pk)
         else:
             messages.error(request, "잘못된 입력입니다")

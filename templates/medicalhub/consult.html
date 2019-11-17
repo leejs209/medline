@@ -29,6 +29,14 @@
         </div>
     </div>
 
+    <div class="tabs">
+      <ul>
+        <li {% if tab == 'pending' %}class="is-active" {% endif %}><a href="{% url 'medicalhub_pending_consult' %}">상담 예정</a></li>
+        <li {% if tab == 'ongoing' %}class="is-active" {% endif %}><a href="{% url 'medicalhub_ongoing_consult' %}">진행 중</a></li>
+        <li {% if tab == 'finished' %}class="is-active" {% endif %}><a href="{% url 'medicalhub_finished_consult' %}">상담 완료</a></li>
+      </ul>
+    </div>
+
     <div class="columns is-multiline">
     {% if history.count != 0 %}
     {% load static %}
