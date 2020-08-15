@@ -23,9 +23,13 @@ SECRET_KEY = '_fqy2e7@ad=vgh)wy3@jy4gnv6psd)knyv1$53$&rpy@efbr85'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False
-DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1']
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
+DEBUG = int(os.environ.get("DEBUG", default=0))
+
+# 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
+# For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 # Application definition
 
 INSTALLED_APPS = [
