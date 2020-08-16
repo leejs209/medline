@@ -22,9 +22,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '_fqy2e7@ad=vgh)wy3@jy4gnvcpsd)knyv1$53$&rpy@efbr85'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = False
 
-DEBUG = True
+DEBUG = False
 
 # 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
 # For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
@@ -122,7 +121,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, "docs", "static")
-STATIC_URL = 'leejs209.github.io/medline/static/'
+STATIC_URL = 'https://leejs209.github.io/medline/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
