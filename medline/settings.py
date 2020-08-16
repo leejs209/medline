@@ -19,17 +19,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '_fqy2e7@ad=vgh)wy3@jy4gnv6psd)knyv1$53$&rpy@efbr85'
+SECRET_KEY = '_fqy2e7@ad=vgh)wy3@jy4gnvcpsd)knyv1$53$&rpy@efbr85'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False
-SECRET_KEY = os.environ.get("SECRET_KEY")
 
-DEBUG = int(os.environ.get("DEBUG", default=0))
+DEBUG = True
 
 # 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
 # For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
@@ -122,8 +121,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-# STATIC_ROOT = "/Users/leejs/static"
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "docs", "static")
+STATIC_URL = 'https://leejs209.github.com/medline/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
