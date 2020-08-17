@@ -13,6 +13,7 @@ class CustomUserCreationForm(UserCreationForm):
             'studentno': '번호',
             'name': '성명',
             'birthday': '생년월일',
+            'username': '아이디',
         }
     field_order = ['grade', 'division', 'studentno', 'name', 'birthday', 'username']
 
