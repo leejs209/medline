@@ -163,13 +163,13 @@ PWA_APP_LANG = 'ko-KR'
 
 PWA_APP_ICONS = [
     {
-        'src': '/static/images/icons/icon.png',
+        'src': 'https://leejs209.github.io/medline/static/images/icon/icon.png',
         'sizes': '225x225'
     }
 ]
 PWA_APP_ICONS_APPLE = [
     {
-        'src': '/static/images/icons/icon.png',
+        'src': 'https://leejs209.github.io/medline/static/images/icon/icon.png',
         'sizes': '225x225'
     }
 ]
