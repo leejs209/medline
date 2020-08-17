@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import consult
+from .models import consult, PrescribedMedicine
 from .forms import ConsultForm
 from django.contrib import messages
 from django.utils import timezone
@@ -98,8 +98,11 @@ def get_consultform(request):
 
 def details(request, pk):
     chosen_consult = get_object_or_404(consult, pk=pk)
+    prescription_queryset = PrescribedMedicine.objects.filter(consult=chosen_consult)
+    if len(prescription_queryset) == 0:
+        prescription_queryset = None
     if chosen_consult.user == request.user:
-        return render(request, 'medline/details.html', {'consult': chosen_consult})
+        return render(request, 'medline/details.html', {'consult': chosen_consult, 'prescription': prescription_queryset})
     messages.error(request, "상담을 신청하신 분이 아니므로 접근이 거부됩니다.")
     return redirect('login')
 
