@@ -99,7 +99,7 @@ def get_consultform(request):
 def details(request, pk):
     chosen_consult = get_object_or_404(consult, pk=pk)
     if chosen_consult.user == request.user:
-        return render(request, 'medline/details.html', {'consult': chosen_consult})
+        return render(request, 'medline/details.html', {'consult': chosen_consult, 'title': chosen_consult.title})
     messages.error(request, "상담을 신청하신 분이 아니므로 접근이 거부됩니다.")
     return redirect('login')
 
