@@ -5,3 +5,4 @@ django-pwa==1.0.10
 Pillow==7.2.0
 gunicorn
 django-heroku
+sentry-sdk
