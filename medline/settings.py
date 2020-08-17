@@ -24,7 +24,7 @@ SECRET_KEY = '_fqy2e7@ad=vgh)wy3@jy4gnvcpsd)knyv1$53$&rpy@efbr85'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = False
+DEBUG = True
 
 # 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
 # For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
