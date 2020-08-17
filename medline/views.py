@@ -99,8 +99,6 @@ def get_consultform(request):
 def details(request, pk):
     chosen_consult = get_object_or_404(consult, pk=pk)
     prescription_queryset = PrescribedMedicine.objects.filter(consult=chosen_consult)
-    if len(prescription_queryset) == 0:
-        prescription_queryset = None
     if chosen_consult.user == request.user:
         return render(request, 'medline/details.html', {'consult': chosen_consult, 'prescription': prescription_queryset})
     messages.error(request, "상담을 신청하신 분이 아니므로 접근이 거부됩니다.")

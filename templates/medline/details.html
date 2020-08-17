@@ -30,7 +30,6 @@
                 <div class="box">
                     <p>{{ consult.message|linebreaks }}</p>
                 </div>
-                {% if prescription != None %}
                 <h1 class="title is-size-4">처방</h1>
                 <div class="container">
                     <div class="columns is-multiline">
@@ -44,7 +43,6 @@
                         {% endfor %}
                     </div>
                 </div>
-                {% endif %}
             </div>
         </div>
         <div class="buttons is-centered">
