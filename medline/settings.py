@@ -161,6 +161,24 @@ PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'ko-KR'
 
 
+PWA_APP_ICONS = [
+    {
+        'src': '/static/images/icons/icon.png',
+        'sizes': '225x225'
+    }
+]
+PWA_APP_ICONS_APPLE = [
+    {
+        'src': '/static/images/icons/icon.png',
+        'sizes': '225x225'
+    }
+]
+# PWA_APP_SPLASH_SCREEN = [
+#     {
+#         'src': '/static/images/icons/splash-640x1136.png',
+#         'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+#     }
+# ]
 # django_heroku.settings(locals())
 
 DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
