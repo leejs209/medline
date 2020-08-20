@@ -7,3 +7,4 @@ gunicorn
 django-heroku
 sentry-sdk
 dj-database-url
+whitenoise
