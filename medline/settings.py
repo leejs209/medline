@@ -37,7 +37,7 @@ SECRET_KEY = '_fqy2e7@ad=vgh)wy3@jy4gnvcpsd)knyv1$53$&rpy@efbr85'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = False
+DEBUG = True
 
 # 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
 # For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
@@ -93,12 +93,13 @@ WSGI_APPLICATION = 'medline.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+
+#    'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -179,6 +180,5 @@ PWA_APP_ICONS_APPLE = [
 #         'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
 #     }
 # ]
-# django_heroku.settings(locals())
 
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+django_heroku.settings(locals())
