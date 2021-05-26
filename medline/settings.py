@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'medicalhub',
     'multiselectfield',
     'pwa',
+    'bulma'
 ]
 
 MIDDLEWARE = [
